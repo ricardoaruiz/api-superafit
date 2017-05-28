@@ -19,11 +19,8 @@ public class LoginController {
 	private LoginService loginService;
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<LoginResponse> doLogin(@RequestBody LoginRequest request) {
-		
-		LoginResponse response = loginService.doLogin(request);
-		
-		return ResponseEntity.ok(response);
+	public ResponseEntity<LoginResponse> doLogin(@RequestBody LoginRequest request) {	
+		return ResponseEntity.ok(loginService.doLogin(request));
 	}
 	
 }
