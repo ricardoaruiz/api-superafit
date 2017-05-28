@@ -20,12 +20,10 @@ public class LoginService {
 			loginResponse.setCode(ServiceConstants.LoginConstants.USER_NOT_FOUND);
 			loginResponse.setMessage("Usuário não cadastrado.");		
 			break;
-
-		case USER_LOGIN_SUCCESS:
-			loginResponse.setCode(ServiceConstants.LoginConstants.USER_LOGIN_SUCCESS);
-			loginResponse.setMessage("Login realizado com sucesso.");			
 			
 		default:
+			loginResponse.setCode(ServiceConstants.LoginConstants.USER_LOGIN_SUCCESS);
+			loginResponse.setMessage("Login realizado com sucesso.");			
 			break;
 		}
 
