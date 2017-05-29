@@ -7,5 +7,7 @@ import br.com.superafit.model.User;
 public interface UserRepository extends JpaRepository<User, String>  {
 	
 	User findByLoginAndPassword(String login, String password);
+	
+	User findByLogin(String login);
 
 }

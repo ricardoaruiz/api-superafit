@@ -1,5 +1,7 @@
 package br.com.superafit.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +21,7 @@ public class LoginController {
 	private LoginService loginService;
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<LoginResponse> doLogin(@RequestBody LoginRequest request) {	
+	public ResponseEntity<LoginResponse> doLogin(@RequestBody @Valid LoginRequest request) {	
 		return ResponseEntity.ok(loginService.doLogin(request));
 	}
 	
