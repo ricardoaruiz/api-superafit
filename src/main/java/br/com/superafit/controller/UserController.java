@@ -12,7 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.superafit.controller.model.request.CreateUserRequest;
 import br.com.superafit.controller.model.response.CreateUserResponse;
+import br.com.superafit.controller.model.response.LoginResponse;
 import br.com.superafit.service.UserService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("user")
@@ -20,6 +24,12 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@ApiOperation(value = "createUser", nickname = "createUser")		
+	@ApiResponses(value = { 
+            @ApiResponse(code = 201, message = "Created", response = LoginResponse.class),
+            @ApiResponse(code = 422, message = "Unprocessable Entity"),
+            @ApiResponse(code = 500, message = "Internal Server Error")}) 
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<CreateUserResponse> create(@RequestBody @Valid CreateUserRequest request) {
