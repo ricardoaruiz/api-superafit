@@ -6,24 +6,14 @@ public class LoginResponse implements Serializable {
 
 	private static final long serialVersionUID = -7288918264983804808L;
 
-	private int code;
+	private String userId;
 	
-	private String message;
-
-	public int getCode() {
-		return code;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setCode(int code) {
-		this.code = code;
+	public void setUserId(String code) {
+		this.userId = code;
 	}
 
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
-	
 }

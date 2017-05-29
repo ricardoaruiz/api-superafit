@@ -1,5 +1,7 @@
 package br.com.superafit.service;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
 import br.com.superafit.controller.model.request.LoginRequest;
@@ -17,13 +19,10 @@ public class LoginService {
 		
 		switch (loginData.getLogin()) {
 		case USER_NOT_FOUND:
-//			loginResponse.setCode(ServiceConstants.LoginConstants.USER_NOT_FOUND);
-//			loginResponse.setMessage("Usuário não cadastrado.");
 			throw new LoginException();
 			
 		default:
-			loginResponse.setCode(ServiceConstants.LoginConstants.USER_LOGIN_SUCCESS);
-			loginResponse.setMessage("Login realizado com sucesso.");			
+			loginResponse.setUserId(UUID.randomUUID().toString());
 			break;
 		}
 
