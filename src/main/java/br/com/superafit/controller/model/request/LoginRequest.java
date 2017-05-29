@@ -6,15 +6,17 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import br.com.superafit.enumeration.MessageCodeEnum;
+
 public class LoginRequest implements Serializable {
 
 	private static final long serialVersionUID = 1205720579537231838L;
 
-	@NotEmpty(message="login.required.login")
+	@NotEmpty(message=MessageCodeEnum.Constants.LOGIN_REQUIRED_LOGIN)
 	private String login;
 	
-	@Size(min=6, max=6, message="login.invalid.password.length")
-	@NotEmpty(message="login.required.password")
+	@Size(min=6, max=6, message=MessageCodeEnum.Constants.LOGIN_INVALID_PASSWORD_LENGTH)
+	@NotEmpty(message=MessageCodeEnum.Constants.LOGIN_REQUIRED_PASSWORD)
 	private String password;
 
 	public String getLogin() {
