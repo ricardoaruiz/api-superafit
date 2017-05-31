@@ -37,7 +37,6 @@ public class ScheduleService {
 		List<ScheduleResponse> listSchedules = new ArrayList<ScheduleResponse>();
 		
 		LinkedHashMap<String, ScheduleResponse> temp = new LinkedHashMap<String, ScheduleResponse>();
-		List<DayScheduleResponse> daySchedule = new ArrayList<DayScheduleResponse>();
 		
 		String currentWeekDay = "";
 		String nextWeekDay = "";

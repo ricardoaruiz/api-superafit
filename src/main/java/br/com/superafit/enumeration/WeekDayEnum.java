@@ -7,8 +7,8 @@ public enum WeekDayEnum {
 	QUARTA_FEIRA(3, "Quarta-feira"),
 	QUINTA_FEIRA(4, "Quinta-feira"),
 	SEXTA_FEIRA(5, "Sexta-feira"),
-	SABADO_FEIRA(6, "Sábado"),
-	DOMINGO_FEIRA(7, "Domingo");
+	SABADO(6, "Sábado"),
+	DOMINGO(7, "Domingo");
 	
 	private final int code;
 	private final String desc;
