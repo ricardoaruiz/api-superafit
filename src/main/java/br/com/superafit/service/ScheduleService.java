@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import br.com.superafit.controller.model.response.DayScheduleResponse;
 import br.com.superafit.controller.model.response.ListScheduleResponse;
 import br.com.superafit.controller.model.response.ScheduleResponse;
+import br.com.superafit.enumeration.WeekDayEnum;
 import br.com.superafit.model.Schedule;
 import br.com.superafit.repository.ScheduleRepository;
 
@@ -91,24 +92,8 @@ public class ScheduleService {
 		return strHour + ":" + strMinute;
 	}
 
-	//TODO ajustar as strings
-	private String getWeekDay(final int weekDay) {
-		switch (weekDay) {
-		case 1:
-			return "Segunda-feira";
-		case 2:
-			return "Terça-feira";
-		case 3:
-			return "Quarta-feira";
-		case 4:
-			return "Quinta-feira";
-		case 5:
-			return "Sexta-feira";
-		case 6:
-			return "Sábado-feira";
-		default:
-			return "Domingo-feira";
-		}
+	private String getWeekDay(final int weekDay) {		
+		return WeekDayEnum.fromCode(weekDay).getDesc();
 	}
 	
 }
