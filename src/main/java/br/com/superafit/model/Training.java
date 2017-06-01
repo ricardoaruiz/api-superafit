@@ -13,7 +13,8 @@ import java.util.List;
 @Entity
 @Table(name="training")
 public class Training implements Serializable {
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = -713714524851711030L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -22,23 +23,15 @@ public class Training implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date date;
 
-	//uni-directional many-to-many association to Movement
-	@ManyToMany
-	@JoinTable(
-		name="training_movement"
-		, joinColumns={
-			@JoinColumn(name="training_id")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="movement_id")
-			}
-		)
-	private List<Movement> movements;
+	@Column(name="qt_round")
+	private int qtRound;
 
-	//bi-directional many-to-one association to TrainingType
 	@ManyToOne
 	@JoinColumn(name="training_type_id")
 	private TrainingType trainingType;
+
+	@OneToMany(mappedBy="training", cascade=CascadeType.ALL)
+	private List<TrainingMovement> trainingMovements;
 
 	public Training() {
 	}
@@ -59,12 +52,12 @@ public class Training implements Serializable {
 		this.date = date;
 	}
 
-	public List<Movement> getMovements() {
-		return this.movements;
+	public int getQtRound() {
+		return this.qtRound;
 	}
 
-	public void setMovements(List<Movement> movements) {
-		this.movements = movements;
+	public void setQtRound(int qtRound) {
+		this.qtRound = qtRound;
 	}
 
 	public TrainingType getTrainingType() {
@@ -73,6 +66,28 @@ public class Training implements Serializable {
 
 	public void setTrainingType(TrainingType trainingType) {
 		this.trainingType = trainingType;
+	}
+
+	public List<TrainingMovement> getTrainingMovements() {
+		return this.trainingMovements;
+	}
+
+	public void setTrainingMovements(List<TrainingMovement> trainingMovements) {
+		this.trainingMovements = trainingMovements;
+	}
+
+	public TrainingMovement addTrainingMovement(TrainingMovement trainingMovement) {
+		getTrainingMovements().add(trainingMovement);
+		trainingMovement.setTraining(this);
+
+		return trainingMovement;
+	}
+
+	public TrainingMovement removeTrainingMovement(TrainingMovement trainingMovement) {
+		getTrainingMovements().remove(trainingMovement);
+		trainingMovement.setTraining(null);
+
+		return trainingMovement;
 	}
 
 }

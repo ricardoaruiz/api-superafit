@@ -31,6 +31,8 @@ insert into movement (name, translate, description) values ('Thruster','Thruster
 select * from training;
 select * from training_movement;
 
+delete from training where id > 11;
+
 insert into training (training_type_id, date, qt_round) values (1, '2017-05-31', 3);
 insert into training_movement values (1, 1, 10);
 insert into training_movement values (4, 1, 20);
