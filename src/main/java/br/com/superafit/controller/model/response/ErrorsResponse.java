@@ -1,22 +1,22 @@
 package br.com.superafit.controller.model.response;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ErrorsResponse implements Serializable {
 
 	private static final long serialVersionUID = 4470978278346644944L;
 	
-	private List<ErrorResponse> errors;
+	private Set<ErrorResponse> errors;
 	
-	public List<ErrorResponse> getErrors() {
+	public Set<ErrorResponse> getErrors() {
 		return errors;
 	}
 
 	public void addErrors(ErrorResponse error) {
 		if(this.errors == null) {
-			this.errors = new ArrayList<ErrorResponse>();
+			this.errors = new HashSet<ErrorResponse>();
 		}
 		this.errors.add(error);
 	}

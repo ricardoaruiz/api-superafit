@@ -1,5 +1,7 @@
 package br.com.superafit.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +27,7 @@ public class DayTrainingController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> create(@RequestBody CreateDayTrainingRequest request) {		
+	public ResponseEntity<Void> create(@RequestBody @Valid CreateDayTrainingRequest request) {		
 		trainingDayService.create(request);		
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}

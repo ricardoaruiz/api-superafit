@@ -4,19 +4,33 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+import br.com.superafit.enumeration.MessageCodeEnum;
 
 public class CreateDayTrainingRequest implements Serializable {
 	
 	private static final long serialVersionUID = 3286240843984490189L;
 
+	@NotNull(message=MessageCodeEnum.Constants.CREATE_DAY_TRAINING_REQUIRED_DATE)
 	@JsonFormat(pattern = "dd-MM-yyyy", locale = "pt-BR", timezone = "Brazil/East")
 	private Date training_date;
 	
-	private int training_type;
+	@NotNull(message=MessageCodeEnum.Constants.CREATE_DAY_TRAINING_REQUIRED_TYPE)
+	private Integer training_type;
 	
-	private int training_round;
+	@NotNull(message=MessageCodeEnum.Constants.CREATE_DAY_TRAINING_REQUIRED_ROUNDS)
+	@Min(value=1, message=MessageCodeEnum.Constants.CREATE_DAY_TRAINING_MIN_ROUNDS)
+	private Integer training_round;
 	
+	@Valid
+	@NotEmpty(message=MessageCodeEnum.Constants.CREATE_DAY_TRAINING_REQUIRED_MOVEMENTS)
 	private List<DayTrainingMovementsRequest> movements;
 
 	public Date getTraining_date() {
@@ -27,19 +41,19 @@ public class CreateDayTrainingRequest implements Serializable {
 		this.training_date = training_date;
 	}
 
-	public int getTraining_type() {
+	public Integer getTraining_type() {
 		return training_type;
 	}
 
-	public void setTraining_type(int training_type) {
+	public void setTraining_type(Integer training_type) {
 		this.training_type = training_type;
 	}
 
-	public int getTraining_round() {
+	public Integer getTraining_round() {
 		return training_round;
 	}
 
-	public void setTraining_round(int training_round) {
+	public void setTraining_round(Integer training_round) {
 		this.training_round = training_round;
 	}
 
