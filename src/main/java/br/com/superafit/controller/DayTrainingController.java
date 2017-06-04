@@ -15,7 +15,7 @@ import br.com.superafit.controller.model.response.DayTrainingResponse;
 import br.com.superafit.service.DayTrainingService;
 
 @RestController
-@RequestMapping("day-trainig")
+@RequestMapping("day-training")
 public class DayTrainingController {
 
 	@Autowired
