@@ -52,14 +52,13 @@ public class DayTrainingService {
 	//TODO verificar se será passado o parâmetro de data para buscar um treino específico
 	public DayTrainingResponse getLastTrainingDayResponse() {
 		
-		DayTrainingResponse toReturn = null;
+		DayTrainingResponse toReturn = new DayTrainingResponse();
 		
 		List<Training> trainings = dayTrainingRepository.findAllByOrderByDateDesc();	
 		
 		if(trainings != null && !trainings.isEmpty()) {
 			Training training = dayTrainingRepository.findAllByOrderByDateDesc().get(0);
 			
-			toReturn = new DayTrainingResponse();
 			toReturn.setDate(diaMesAno.format(training.getDate()));
 			toReturn.setRound(training.getQtRound());
 			toReturn.setType(training.getTrainingType().getName());
