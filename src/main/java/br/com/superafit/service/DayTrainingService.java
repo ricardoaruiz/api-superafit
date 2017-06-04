@@ -2,6 +2,7 @@ package br.com.superafit.service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,24 +50,20 @@ public class DayTrainingService {
 		}
 	}
 
-	//TODO verificar se será passado o parâmetro de data para buscar um treino específico
-	public DayTrainingResponse getLastTrainingDayResponse() {
-		
-		DayTrainingResponse toReturn = new DayTrainingResponse();
-		
-		List<Training> trainings = dayTrainingRepository.findAllByOrderByDateDesc();	
-		
-		if(trainings != null && !trainings.isEmpty()) {
-			Training training = dayTrainingRepository.findAllByOrderByDateDesc().get(0);
+	public DayTrainingResponse getDayTraining(Date date) {
 			
+		Training training = dayTrainingRepository.findByDate(date);	
+		
+		if(training != null) {
+			DayTrainingResponse toReturn = new DayTrainingResponse();
 			toReturn.setDate(diaMesAno.format(training.getDate()));
 			toReturn.setRound(training.getQtRound());
-			toReturn.setType(training.getTrainingType().getName());
-			
+			toReturn.setType(training.getTrainingType().getName());			
 			toReturn.setMovements(getMovements(training.getTrainingMovements()));
+			return toReturn;
 		}
 		
-		return toReturn;
+		return null;
 		
 	}
 
