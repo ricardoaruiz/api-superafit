@@ -60,6 +60,11 @@ public enum MessageCodeEnum {
 		public static final String CREATE_DAY_TRAINING_REQUIRED_MOVEMENT_REPETITION = "create_day_training_required_movement_repetition";
 		public static final String CREATE_DAY_TRAINING_REQUIRED_MOVEMENT_MIN_REPETITION = "create_day_training_required_movement_min_repetition";
 		
+		//create movement
+		public static final String CREATE_MOVEMENT_REQUIRED_NAME = "create_movement_required_name";
+		public static final String CREATE_MOVEMENT_REQUIRED_TRANSLATE = "create_movement_required_translate";
+		public static final String CREATE_MOVEMENT_ALREADY_EXISTS = "create_movement_already_exists";
+		
 	}
 	
 }

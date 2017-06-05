@@ -12,8 +12,6 @@ public class MovementResponse implements Serializable {
 	
 	private String description;
 	
-	private int qtRep;
-
 	public String getName() {
 		return name;
 	}
@@ -37,13 +35,5 @@ public class MovementResponse implements Serializable {
 	public void setTranslate(String translate) {
 		this.translate = translate;
 	}
-
-	public int getQtRep() {
-		return qtRep;
-	}
-
-	public void setQtRep(int qtRep) {
-		this.qtRep = qtRep;
-	}
-
+	
 }

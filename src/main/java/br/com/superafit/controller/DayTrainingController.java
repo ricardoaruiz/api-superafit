@@ -40,8 +40,9 @@ public class DayTrainingController {
 			@RequestParam(value="date", required=true)
 			@DateTimeFormat(pattern="dd/MM/yyyy")
 			Date date) {
-		GetDayTrainingResponse dayTraining = trainingDayService.getDayTraining(date);		
-		return dayTraining == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(dayTraining);
+		
+		GetDayTrainingResponse response = new GetDayTrainingResponse(trainingDayService.getDayTraining(date));		
+		return !response.hasTraining() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
 	}
 	
 	@ApiOperation(value = "create", nickname = "create")		
