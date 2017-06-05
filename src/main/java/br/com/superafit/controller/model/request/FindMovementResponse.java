@@ -28,4 +28,8 @@ public class FindMovementResponse implements Serializable {
 		return movements;
 	}
 	
+	public boolean hasMovements() {
+		return movements != null && !movements.isEmpty();
+	}
+	
 }

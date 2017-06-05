@@ -41,12 +41,13 @@ public class MovementController {
 	@ApiOperation(value = "find", nickname = "find")		
 	@ApiResponses(value = { 
             @ApiResponse(code = 200, message = "Created"),
+            @ApiResponse(code = 204, message = "No Content"),
             @ApiResponse(code = 500, message = "Internal Server Error")}) 
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<FindMovementResponse> find(FindMovementRequest request) {		
+	public ResponseEntity<FindMovementResponse> find(FindMovementRequest request) {
 		FindMovementResponse response = new FindMovementResponse(movementService.find(request.getName()));		
-		return ResponseEntity.ok(response);
+		return response.hasMovements() ? ResponseEntity.ok(response) : ResponseEntity.noContent().build();
 	}
 	
 }
