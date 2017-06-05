@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.superafit.controller.model.request.CreateDayTrainingRequest;
 import br.com.superafit.controller.model.request.DayTrainingMovementsRequest;
-import br.com.superafit.controller.model.response.DayTrainingResponse;
+import br.com.superafit.controller.model.response.GetDayTrainingResponse;
 import br.com.superafit.controller.model.response.MovementResponse;
 import br.com.superafit.model.Training;
 import br.com.superafit.model.TrainingMovement;
@@ -50,12 +50,12 @@ public class DayTrainingService {
 		}
 	}
 
-	public DayTrainingResponse getDayTraining(Date date) {
+	public GetDayTrainingResponse getDayTraining(Date date) {
 			
 		Training training = dayTrainingRepository.findByDate(date);	
 		
 		if(training != null) {
-			DayTrainingResponse toReturn = new DayTrainingResponse();
+			GetDayTrainingResponse toReturn = new GetDayTrainingResponse();
 			toReturn.setDate(diaMesAno.format(training.getDate()));
 			toReturn.setRound(training.getQtRound());
 			toReturn.setType(training.getTrainingType().getName());			

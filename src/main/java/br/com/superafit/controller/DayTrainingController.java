@@ -15,8 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.superafit.controller.model.request.CreateDayTrainingRequest;
-import br.com.superafit.controller.model.response.DayTrainingResponse;
+import br.com.superafit.controller.model.response.GetDayTrainingResponse;
+import br.com.superafit.controller.model.response.ListScheduleResponse;
 import br.com.superafit.service.DayTrainingService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("day-training")
@@ -25,19 +29,26 @@ public class DayTrainingController {
 	@Autowired
 	private DayTrainingService trainingDayService;
 		
+	@ApiOperation(value = "getWod", nickname = "getWod")		
+	@ApiResponses(value = { 
+            @ApiResponse(code = 200, message = "Ok", response = ListScheduleResponse.class),
+            @ApiResponse(code = 204, message = "No Content"),
+            @ApiResponse(code = 500, message = "Internal Server Error")}) 
+	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<DayTrainingResponse> getDayTraining(
+	public ResponseEntity<GetDayTrainingResponse> getDayTraining(
 			@RequestParam(value="date", required=true)
 			@DateTimeFormat(pattern="dd/MM/yyyy")
 			Date date) {
-		DayTrainingResponse dayTraining = trainingDayService.getDayTraining(date);
-		
-		if(dayTraining == null) {
-			return ResponseEntity.noContent().build();
-		}
-		
-		return ResponseEntity.ok(dayTraining);
+		GetDayTrainingResponse dayTraining = trainingDayService.getDayTraining(date);		
+		return dayTraining == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(dayTraining);
 	}
+	
+	@ApiOperation(value = "create", nickname = "create")		
+	@ApiResponses(value = { 
+            @ApiResponse(code = 201, message = "Created"),
+            @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})	
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> create(@RequestBody @Valid CreateDayTrainingRequest request) {		

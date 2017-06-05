@@ -27,6 +27,7 @@ public class UserController {
 	@ApiOperation(value = "createUser", nickname = "createUser")		
 	@ApiResponses(value = { 
             @ApiResponse(code = 201, message = "Created", response = CreateUserResponse.class),
+            @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 422, message = "Unprocessable Entity"),
             @ApiResponse(code = 500, message = "Internal Server Error")}) 
 	

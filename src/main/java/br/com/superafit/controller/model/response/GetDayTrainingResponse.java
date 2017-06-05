@@ -3,7 +3,7 @@ package br.com.superafit.controller.model.response;
 import java.io.Serializable;
 import java.util.List;
 
-public class DayTrainingResponse implements Serializable {
+public class GetDayTrainingResponse implements Serializable {
 
 	private static final long serialVersionUID = -5465418877161987228L;
 

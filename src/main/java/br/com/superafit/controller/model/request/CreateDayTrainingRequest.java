@@ -13,23 +13,28 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.superafit.enumeration.MessageCodeEnum;
+import io.swagger.annotations.ApiModelProperty;
 
 public class CreateDayTrainingRequest implements Serializable {
 	
 	private static final long serialVersionUID = 3286240843984490189L;
 
+	@ApiModelProperty(example="01/01/2017", required=true)
 	@NotNull(message=MessageCodeEnum.Constants.CREATE_DAY_TRAINING_REQUIRED_DATE)
-	@JsonFormat(pattern = "dd-MM-yyyy", locale = "pt-BR", timezone = "Brazil/East")
+	@JsonFormat(pattern = "dd/MM/yyyy", locale = "pt-BR", timezone = "Brazil/East")
 	private Date training_date;
 	
+	@ApiModelProperty(example="1", required=true)
 	@NotNull(message=MessageCodeEnum.Constants.CREATE_DAY_TRAINING_REQUIRED_TYPE)
 	private Integer training_type;
 	
+	@ApiModelProperty(example="2", required=true)
 	@NotNull(message=MessageCodeEnum.Constants.CREATE_DAY_TRAINING_REQUIRED_ROUNDS)
 	@Min(value=1, message=MessageCodeEnum.Constants.CREATE_DAY_TRAINING_MIN_ROUNDS)
 	private Integer training_round;
 	
 	@Valid
+	@ApiModelProperty(required=true)
 	@NotEmpty(message=MessageCodeEnum.Constants.CREATE_DAY_TRAINING_REQUIRED_MOVEMENTS)
 	private List<DayTrainingMovementsRequest> movements;
 

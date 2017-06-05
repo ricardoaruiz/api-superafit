@@ -26,6 +26,7 @@ public class LoginController {
 	@ApiOperation(value = "doLogin", nickname = "doLogin")		
 	@ApiResponses(value = { 
             @ApiResponse(code = 200, message = "OK", response = LoginResponse.class),
+            @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 401, message = "Unauthorized"),
             @ApiResponse(code = 500, message = "Internal Server Error")}) 
 	
