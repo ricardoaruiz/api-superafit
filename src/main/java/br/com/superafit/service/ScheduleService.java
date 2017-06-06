@@ -21,11 +21,14 @@ import br.com.superafit.repository.ScheduleRepository;
 import br.com.superafit.service.domain.ISchedule;
 import br.com.superafit.service.exception.InvalidScheduleException;
 import br.com.superafit.service.exception.ScheduleAlreadyExists;
-import br.com.superafit.utils.DateFormatUtil;
 
 @Service
 public class ScheduleService {
 	
+	private static final int ONE_SECOND_IN_MILLISECOND = 1000;
+
+	private static final int HOUR_IN_SECONDS = 3600;
+
 	private final Logger LOG = LoggerFactory.getLogger(ScheduleService.class);
 	
 	@Autowired
@@ -33,33 +36,45 @@ public class ScheduleService {
 	
 	public void insert(ISchedule schedule) {
 		
-		LOG.info(DateFormatUtil.toString(schedule.getScheduleStart(), DateFormatUtil.HORA_MINUTO));
-		LOG.info(DateFormatUtil.toString(schedule.getScheduleEnd(), DateFormatUtil.HORA_MINUTO));
-		
-		if(schedule.getScheduleStart().equals(schedule.getScheduleEnd()) || schedule.getScheduleStart().after(schedule.getScheduleEnd())) {
-			throw new InvalidScheduleException(MessageCodeEnum.Constants.CREATE_SCHEDULE_START_MUST_GREATER_THAN_END);			
-		}
-		
-		Long seconds = (schedule.getScheduleEnd().getTime() - schedule.getScheduleStart().getTime()) / 1000;
-		if(seconds != 3600) {
-			throw new InvalidScheduleException(MessageCodeEnum.Constants.CREATE_SCHEDULE_INVALID_SCHEDULE);
-		}
+		LOG.info("Inserindo horário");
 		
 		Schedule s = getSchedule(schedule);
 		
-		Schedule scheduleFound = scheduleRepository.findByWeekDayAndScheduleStartAndScheduleEnd(s.getWeekDay(), s.getScheduleStart(), s.getScheduleEnd());
-		if(scheduleFound != null) {
-			throw new ScheduleAlreadyExists(MessageCodeEnum.Constants.CREATE_SCHEDULE_ALREADY_EXISTS);
-		}
-		
-		Schedule scheduleFound1 = scheduleRepository.findConflictSchedule(s.getWeekDay(), s.getScheduleStart(), s.getScheduleEnd());
-		
-		if(scheduleFound1 != null) {
-			throw new ScheduleAlreadyExists(MessageCodeEnum.Constants.CREATE_SCHEDULE_ALREADY_EXISTS);
-		}
+		validateScheduleRange(schedule);		
+		validateScheduleDuration(schedule);
+		verifyAlreadyExist(s);
 		
 		scheduleRepository.save(s);
 		
+	}
+
+	private void validateScheduleDuration(ISchedule schedule) {
+		Long seconds = (schedule.getScheduleEnd().getTime() - schedule.getScheduleStart().getTime()) / ONE_SECOND_IN_MILLISECOND;
+		if(seconds != HOUR_IN_SECONDS) {
+			LOG.info("Inserindo horário - duração de inválida.");
+			throw new InvalidScheduleException(MessageCodeEnum.Constants.CREATE_SCHEDULE_INVALID_SCHEDULE);
+		}
+	}
+
+	private void validateScheduleRange(ISchedule schedule) {
+		if(schedule.getScheduleStart().equals(schedule.getScheduleEnd()) || schedule.getScheduleStart().after(schedule.getScheduleEnd())) {
+			LOG.info("Inserindo horário - horário inicício menor que horário fim");
+			throw new InvalidScheduleException(MessageCodeEnum.Constants.CREATE_SCHEDULE_START_MUST_GREATER_THAN_END);			
+		}
+	}
+
+	private void verifyAlreadyExist(Schedule s) {
+		Schedule scheduleFound = scheduleRepository.findByWeekDayAndScheduleStartAndScheduleEnd(s.getWeekDay(), s.getScheduleStart(), s.getScheduleEnd());
+		if(scheduleFound != null) {
+			LOG.info("Inserindo horário - horário já existente.");
+			throw new ScheduleAlreadyExists(MessageCodeEnum.Constants.CREATE_SCHEDULE_ALREADY_EXISTS);
+		}
+		
+		Schedule scheduleFound1 = scheduleRepository.findConflictSchedule(s.getWeekDay(), s.getScheduleStart(), s.getScheduleEnd());		
+		if(scheduleFound1 != null) {
+			LOG.info("Inserindo horário - horário já existente.");
+			throw new ScheduleAlreadyExists(MessageCodeEnum.Constants.CREATE_SCHEDULE_ALREADY_EXISTS);
+		}
 	}
 
 	private Schedule getSchedule(ISchedule schedule) {
