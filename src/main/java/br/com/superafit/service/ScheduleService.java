@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,15 +21,21 @@ import br.com.superafit.repository.ScheduleRepository;
 import br.com.superafit.service.domain.ISchedule;
 import br.com.superafit.service.exception.InvalidScheduleException;
 import br.com.superafit.service.exception.ScheduleAlreadyExists;
+import br.com.superafit.utils.DateFormatUtil;
 
 @Service
 public class ScheduleService {
-
+	
+	private final Logger LOG = LoggerFactory.getLogger(ScheduleService.class);
+	
 	@Autowired
 	private ScheduleRepository scheduleRepository;
 	
 	public void insert(ISchedule schedule) {
-	
+		
+		LOG.info(DateFormatUtil.toString(schedule.getScheduleStart(), DateFormatUtil.HORA_MINUTO));
+		LOG.info(DateFormatUtil.toString(schedule.getScheduleEnd(), DateFormatUtil.HORA_MINUTO));
+		
 		if(schedule.getScheduleStart().equals(schedule.getScheduleEnd()) || schedule.getScheduleStart().after(schedule.getScheduleEnd())) {
 			throw new InvalidScheduleException(MessageCodeEnum.Constants.CREATE_SCHEDULE_START_MUST_GREATER_THAN_END);			
 		}
