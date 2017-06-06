@@ -12,9 +12,13 @@ import org.springframework.stereotype.Service;
 import br.com.superafit.controller.model.response.DayScheduleResponse;
 import br.com.superafit.controller.model.response.ListScheduleResponse;
 import br.com.superafit.controller.model.response.ScheduleResponse;
+import br.com.superafit.enumeration.MessageCodeEnum;
 import br.com.superafit.enumeration.WeekDayEnum;
 import br.com.superafit.model.Schedule;
 import br.com.superafit.repository.ScheduleRepository;
+import br.com.superafit.service.domain.ISchedule;
+import br.com.superafit.service.exception.InvalidScheduleException;
+import br.com.superafit.service.exception.ScheduleAlreadyExists;
 
 @Service
 public class ScheduleService {
@@ -22,10 +26,46 @@ public class ScheduleService {
 	@Autowired
 	private ScheduleRepository scheduleRepository;
 	
+	public void insert(ISchedule schedule) {
+	
+		if(schedule.getScheduleStart().equals(schedule.getScheduleEnd()) || schedule.getScheduleStart().after(schedule.getScheduleEnd())) {
+			throw new InvalidScheduleException(MessageCodeEnum.Constants.CREATE_SCHEDULE_START_MUST_GREATER_THAN_END);			
+		}
+		
+		Long seconds = (schedule.getScheduleEnd().getTime() - schedule.getScheduleStart().getTime()) / 1000;
+		if(seconds != 3600) {
+			throw new InvalidScheduleException(MessageCodeEnum.Constants.CREATE_SCHEDULE_INVALID_SCHEDULE);
+		}
+		
+		Schedule s = getSchedule(schedule);
+		
+		Schedule scheduleFound = scheduleRepository.findByWeekDayAndScheduleStartAndScheduleEnd(s.getWeekDay(), s.getScheduleStart(), s.getScheduleEnd());
+		if(scheduleFound != null) {
+			throw new ScheduleAlreadyExists(MessageCodeEnum.Constants.CREATE_SCHEDULE_ALREADY_EXISTS);
+		}
+		
+		Schedule scheduleFound1 = scheduleRepository.findConflictSchedule(s.getWeekDay(), s.getScheduleStart(), s.getScheduleEnd());
+		
+		if(scheduleFound1 != null) {
+			throw new ScheduleAlreadyExists(MessageCodeEnum.Constants.CREATE_SCHEDULE_ALREADY_EXISTS);
+		}
+		
+		scheduleRepository.save(s);
+		
+	}
+
+	private Schedule getSchedule(ISchedule schedule) {
+		Schedule s = new Schedule();
+		s.setWeekDay(schedule.getWeekDay());
+		s.setScheduleStart(schedule.getScheduleStart());
+		s.setScheduleEnd(schedule.getScheduleEnd());
+		return s;
+	}
+	
 	public ListScheduleResponse list() {
 		ListScheduleResponse response = new ListScheduleResponse();
 				
-		List<Schedule> schedules = scheduleRepository.findAllByOrderByWeekDayAscShceduleStartAsc();
+		List<Schedule> schedules = scheduleRepository.findAllByOrderByWeekDayAscScheduleStartAsc();
 		if(schedules != null && !schedules.isEmpty()) {
 			response.setSchedules(getSchedules(schedules));
 		}
@@ -55,8 +95,8 @@ public class ScheduleService {
 			}
 			
 			DayScheduleResponse ds = new DayScheduleResponse();
-			ds.setScheduleStart(getSchedule(s.getShceduleStart()));
-			ds.setShceduleEnd(getSchedule(s.getScheduleEnd()));			
+			ds.setScheduleStart(getSchedule(s.getScheduleStart()));
+			ds.setScheduleEnd(getSchedule(s.getScheduleEnd()));			
 			scheduleResponse.addDaySchedule(ds);			
 			
 			nextWeekDay = getWeekDay(s.getWeekDay());

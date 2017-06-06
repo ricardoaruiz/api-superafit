@@ -1,6 +1,4 @@
 /*Schedule==================================================================================*/
-truncate table schedule;
-
 select * from schedule order by week_day, schedule_start;
 
 insert into schedule (week_day, schedule_start, schedule_end) values (1, '06:30','07:30');
@@ -68,6 +66,7 @@ from 	training t,
 where t.id = tm.training_id
 and t.training_type_id = tt.id
 and tm.movement_id = m.id
+order by t.date, m.name;
 
 /*==========================================================================================*/
 

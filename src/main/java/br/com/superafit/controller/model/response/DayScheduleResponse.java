@@ -12,7 +12,7 @@ public class DayScheduleResponse implements Serializable {
 	private String scheduleStart;
 	
 	@JsonProperty("schedule_end")
-	private String shceduleEnd;
+	private String scheduleEnd;
 
 	public String getScheduleStart() {
 		return scheduleStart;
@@ -22,12 +22,12 @@ public class DayScheduleResponse implements Serializable {
 		this.scheduleStart = scheduleStart;
 	}
 
-	public String getShceduleEnd() {
-		return shceduleEnd;
+	public String getScheduleEnd() {
+		return scheduleEnd;
 	}
 
-	public void setShceduleEnd(String shceduleEnd) {
-		this.shceduleEnd = shceduleEnd;
+	public void setScheduleEnd(String scheduleEnd) {
+		this.scheduleEnd = scheduleEnd;
 	}
 	
 }
