@@ -10,7 +10,7 @@ public class CreateDeviceRequest implements IDevice, Serializable {
 
 	private static final long serialVersionUID = -8671798117904686892L;
 
-	@JsonProperty("uesr_id")
+	@JsonProperty("user_id")
 	private String userId;
 	
 	@JsonProperty("token")
