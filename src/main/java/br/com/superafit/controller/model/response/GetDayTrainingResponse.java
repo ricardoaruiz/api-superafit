@@ -24,7 +24,7 @@ public class GetDayTrainingResponse implements Serializable {
 	
 	public String getDate() {
 		if(hasTraining() && this.training.getDate() != null) {
-			return DateFormatUtil.toString(this.training.getDate(), DateFormatUtil.DIA_MES_ANO);
+			return DateFormatUtil.toString(this.training.getDate(), DateFormatUtil.Format.DIA_MES_ANO);
 		}
 		return null;
 	}
