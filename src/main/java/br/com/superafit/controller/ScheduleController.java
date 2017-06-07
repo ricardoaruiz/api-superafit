@@ -33,11 +33,13 @@ public class ScheduleController {
 	@ApiOperation(value = "list", nickname = "list")		
 	@ApiResponses(value = { 
             @ApiResponse(code = 200, message = "OK", response = ListScheduleResponse.class),
+            @ApiResponse(code = 204, message = "No Content"),
             @ApiResponse(code = 500, message = "Internal Server Error")}) 
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<ListScheduleResponse> list() {
-		return ResponseEntity.ok(scheduleService.list());
+		ListScheduleResponse schedules = scheduleService.list();
+		return schedules == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(schedules);
 	}
 	
 }

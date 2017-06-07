@@ -86,10 +86,11 @@ public class ScheduleService {
 	}
 	
 	public ListScheduleResponse list() {
-		ListScheduleResponse response = new ListScheduleResponse();
+		ListScheduleResponse response = null;
 				
 		List<Schedule> schedules = scheduleRepository.findAllByOrderByWeekDayAscScheduleStartAsc();
 		if(schedules != null && !schedules.isEmpty()) {
+			response = new ListScheduleResponse();
 			response.setSchedules(getSchedules(schedules));
 		}
 		
