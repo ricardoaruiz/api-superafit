@@ -44,7 +44,7 @@ public class DayTrainingService {
 		
 		if(dayTraining != null) {
 			trainingMovementRepository.removeAll(dayTraining.getId());
-			dayTrainingRepository.delete(dayTraining);		
+			dayTrainingRepository.delete(dayTraining.getId());		
 		}
 		
 		Training saved = saveTraining(request);

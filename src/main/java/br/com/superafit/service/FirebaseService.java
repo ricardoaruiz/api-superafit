@@ -80,7 +80,7 @@ public class FirebaseService {
 			
 			Response<FirebaseResponse> response = callSend.execute();
 			
-			LOG.info("Resposta Firebase: " + response.body());
+			LOG.info("Resposta Firebase: " + om.writeValueAsString(response.body()));
 			
 			return response;
 		} catch (IOException e) {
