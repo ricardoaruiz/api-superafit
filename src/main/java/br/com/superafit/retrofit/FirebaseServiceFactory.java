@@ -24,6 +24,7 @@ public class FirebaseServiceFactory {
 		
 		this.retrofit = new Retrofit.Builder()
 			.baseUrl(FIREBASE_URL)
+			.client(client)
 			.addConverterFactory(JacksonConverterFactory.create())
 			.build();
 	}

@@ -1,5 +1,7 @@
 package br.com.superafit.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,10 @@ public class DeviceService {
 		}
 	}
 
+	public List<Device> listAll() {
+		return deviceRepository.findAll();
+	}
+	
 	private void insertDevice(IDevice request) {
 		User user = userRepository.findOne(request.getUserId());
 		
@@ -44,4 +50,5 @@ public class DeviceService {
 		
 		deviceRepository.save(device);
 	}
+
 }

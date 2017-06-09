@@ -66,6 +66,7 @@ from 	training t,
 where t.id = tm.training_id
 and t.training_type_id = tt.id
 and tm.movement_id = m.id
+and t.date = '2017-06-08'
 order by t.date, m.name;
 
 /*==========================================================================================*/

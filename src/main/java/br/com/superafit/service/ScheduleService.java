@@ -25,11 +25,11 @@ import br.com.superafit.service.exception.ScheduleAlreadyExists;
 @Service
 public class ScheduleService {
 	
+	private final Logger LOG = LoggerFactory.getLogger(ScheduleService.class);
+	
 	private static final int ONE_SECOND_IN_MILLISECOND = 1000;
 
 	private static final int HOUR_IN_SECONDS = 3600;
-
-	private final Logger LOG = LoggerFactory.getLogger(ScheduleService.class);
 	
 	@Autowired
 	private ScheduleRepository scheduleRepository;
