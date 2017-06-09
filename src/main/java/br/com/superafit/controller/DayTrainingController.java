@@ -53,7 +53,7 @@ public class DayTrainingController {
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> create(@RequestBody @Valid CreateDayTrainingRequest request) {		
-		trainingDayService.create(request);		
+		trainingDayService.create(request);	
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 	

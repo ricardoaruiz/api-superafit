@@ -71,14 +71,14 @@ public class FirebaseService {
 
 	private Response<FirebaseResponse> callSend(FirebaseRequest request) {
 		try {
-			Call<FirebaseResponse> callValidate = firebaseServiceFactory.getFirebaseService().send(authorization, request);
+			Call<FirebaseResponse> callSend = firebaseServiceFactory.getFirebaseService().send(authorization, request);
 			
 			//Somente para logar a request
 			ObjectMapper om = new ObjectMapper();
 			String json = om.writeValueAsString(request);			
 			LOG.info("Request Firebase: " + json);
 			
-			Response<FirebaseResponse> response = callValidate.execute();
+			Response<FirebaseResponse> response = callSend.execute();
 			
 			LOG.info("Resposta Firebase: " + response.body());
 			

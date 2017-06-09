@@ -18,5 +18,10 @@ public interface TrainingMovementRepository extends JpaRepository<TrainingMoveme
 	void insert(@Param("movementId") int movementId, 
 			    @Param("trainingId") long trainingId, 
 			    @Param("qtRepo") int qtRepo);
+
+	@Modifying
+	@Query(value="DELETE FROM training_movement WHERE training_id = :trainingId", nativeQuery=true)
+	@Transactional
+	void removeAll(@Param("trainingId") long trainingId);
 	
 }

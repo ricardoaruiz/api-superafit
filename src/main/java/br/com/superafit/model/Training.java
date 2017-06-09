@@ -1,9 +1,22 @@
 package br.com.superafit.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -30,7 +43,7 @@ public class Training implements Serializable {
 	@JoinColumn(name="training_type_id")
 	private TrainingType trainingType;
 
-	@OneToMany(mappedBy="training", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="training", fetch=FetchType.EAGER)
 	private List<TrainingMovement> trainingMovements;
 
 	public Training() {
@@ -69,6 +82,9 @@ public class Training implements Serializable {
 	}
 
 	public List<TrainingMovement> getTrainingMovements() {
+		if(this.trainingMovements == null) {
+			this.trainingMovements = new ArrayList<>();
+		}
 		return this.trainingMovements;
 	}
 

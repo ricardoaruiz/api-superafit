@@ -9,12 +9,15 @@ import org.springframework.stereotype.Service;
 
 import br.com.superafit.controller.model.request.CreateDayTrainingRequest;
 import br.com.superafit.controller.model.request.DayTrainingMovementsRequest;
+import br.com.superafit.controller.model.response.GetDayTrainingResponse;
 import br.com.superafit.model.Training;
 import br.com.superafit.model.TrainingMovement;
+import br.com.superafit.model.TrainingMovementPK;
 import br.com.superafit.repository.DayTrainingRepository;
+import br.com.superafit.repository.MovementRepository;
 import br.com.superafit.repository.TrainingMovementRepository;
 import br.com.superafit.repository.TrainingTypeRepository;
-import br.com.superafit.retrofit.service.model.FirebaseNotificationRequest;
+import br.com.superafit.retrofit.service.model.FirebaseDataNotificationRequest;
 
 @Service
 public class DayTrainingService {
@@ -31,30 +34,38 @@ public class DayTrainingService {
 	private TrainingMovementRepository trainingMovementRepository;
 	
 	@Autowired
-	private FirebaseService firebaseService;
+	private MovementRepository movementRepository;
 	
+	@Autowired
+	private FirebaseService firebaseService;
+
 	public void create(CreateDayTrainingRequest request) {		
 		Training dayTraining = getDayTraining(request.getTraining_date());
 		
 		if(dayTraining != null) {
-			for (TrainingMovement trainingMovement : dayTraining.getTrainingMovements()) {
-				trainingMovementRepository.delete(trainingMovement);				
-			}
+			trainingMovementRepository.removeAll(dayTraining.getId());
 			dayTrainingRepository.delete(dayTraining);		
 		}
-		saveTraining(request);
+		
+		Training saved = saveTraining(request);
+		sendNotification(saved);
 	}
 
-	private void saveTraining(CreateDayTrainingRequest request) {
+	private Training saveTraining(CreateDayTrainingRequest request) {
 		try {
-			Training t = getTraining(request);			
-			dayTrainingRepository.save(t);
-			saveTrainingMovements(request, t);				
-			
-			firebaseService.send(new FirebaseNotificationRequest("Superafit", "Treino do dia disponível"));			
+			Training t = dayTrainingRepository.save(getTraining(request));
+			saveTrainingMovements(request, t);
+			return t;
 		} catch(Exception e) {
 			LOG.error(e.getMessage(), e);
+			return null;
 		}
+	}
+
+	private void sendNotification(Training training) {
+		FirebaseDataNotificationRequest dataNotification = new FirebaseDataNotificationRequest("Superafit", "Treino do dia disponível");
+		dataNotification.putData("training", new GetDayTrainingResponse(training));			
+		firebaseService.send(dataNotification);
 	}
 
 	private Training getTraining(CreateDayTrainingRequest request) {
@@ -68,6 +79,18 @@ public class DayTrainingService {
 	private void saveTrainingMovements(CreateDayTrainingRequest request, Training t) {
 		for (DayTrainingMovementsRequest m : request.getMovements()) {
 			trainingMovementRepository.insert(m.getMovement(), t.getId(), m.getRepetition());
+			
+			TrainingMovementPK pk = new TrainingMovementPK();
+			pk.setMovementId(m.getMovement());
+			pk.setTrainingId(t.getId().intValue());
+			
+			TrainingMovement tm = new TrainingMovement();
+			tm.setId(pk);
+			tm.setTraining(t);
+			tm.setQtRep(m.getRepetition());
+			tm.setMovement(movementRepository.getOne(m.getMovement().longValue()));
+			
+			t.addTrainingMovement(tm);			
 		}
 	}
 
