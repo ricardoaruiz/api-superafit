@@ -54,8 +54,6 @@ public class DayTrainingService {
 		}
 		
 		Training saved = saveTraining(request);
-		//TODO essa notificação deveria ficar em um momento onde todos os treinos do dia já estivesse cadastrados;
-//		sendNotification(saved);
 	}
 
 	private Training saveTraining(CreateDayTrainingRequest request) {
@@ -72,11 +70,12 @@ public class DayTrainingService {
 		}
 	}
 
-//	private void sendNotification(Training training) {
-//		FirebaseDataNotificationRequest dataNotification = new FirebaseDataNotificationRequest("Superafit", "Treino do dia disponível");
-//		dataNotification.putData("training", new GetDayTrainingResponse(training));			
-//		firebaseService.send(dataNotification);
-//	}
+	public void sendNotification() {
+		List<Training> dayTraining = getDayTraining(new Date());
+		FirebaseDataNotificationRequest dataNotification = new FirebaseDataNotificationRequest("Superafit", "Treino do dia disponível");
+		dataNotification.putData("training", new GetDayTrainingResponse(dayTraining));			
+		firebaseService.send(dataNotification);
+	}
 
 	private Training getTraining(CreateDayTrainingRequest request) {
 		Training t = new Training();
