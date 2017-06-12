@@ -57,4 +57,6 @@ public class DayTrainingController {
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 	
+	//TODO crirar um endpoint para publicar o treino (enviar a notificação via FCM)
+	
 }

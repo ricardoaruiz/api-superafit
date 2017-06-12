@@ -24,8 +24,12 @@ insert into schedule (week_day, schedule_start, schedule_end) values (4, '16:00'
 /*Training Type==================================================================================*/
 select * from training_type;
 
-insert into training_type (name) values ('W.O.D.');
+insert into training_type (name) values ('WOD 1');
+insert into training_type (name) values ('WOD 2');
+insert into training_type (name) values ('WOD 3');
 insert into training_type (name) values ('AMRAP');
+insert into training_type (name) values ('Aquecimento');
+insert into training_type (name) values ('Técnica');
 /*==========================================================================================*/
 
 /*Movement==================================================================================*/
@@ -35,13 +39,11 @@ insert into movement (name, translate, description) values ('Burpee','Burpee','D
 insert into movement (name, translate, description) values ('Single Under','Corda simples','Descrição Single Under');
 insert into movement (name, translate, description) values ('Double Under','Corda dupla','Descrição Double Under');
 insert into movement (name, translate, description) values ('Thruster','Thruster','Descrição Thruster');
-
-insert into movement (name, translate, description) values ('M5','M5','Descrição M5');
-insert into movement (name, translate, description) values ('M6','M6','Descrição M6');
-insert into movement (name, translate, description) values ('M7','M7','Descrição M7');
-insert into movement (name, translate, description) values ('M8','M8','Descrição M8');
-insert into movement (name, translate, description) values ('M9','M9','Descrição M9');
-insert into movement (name, translate, description) values ('M10','M10','Descrição M10');
+insert into movement (name, translate, description) values ('Wall Ball','Bola na Parede','Descrição Wall Ball');
+insert into movement (name, translate, description) values ('Pull Up','Barra','Descrição Pull Up');
+insert into movement (name, translate, description) values ('Push Up','Flexão de braço','Descrição Push Up');
+insert into movement (name, translate, description) values ('Clean and Jerk','Clean and Jerk','Descrição Clean and Jeark');
+insert into movement (name, translate, description) values ('Jumping Jacks','Jumping Jacks','Descrição Jumping Jacks');
 
 /*==========================================================================================*/
 

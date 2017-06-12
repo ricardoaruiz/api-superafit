@@ -33,6 +33,13 @@ public class CreateDayTrainingRequest implements Serializable {
 	@Min(value=1, message=MessageCodeEnum.Constants.CREATE_DAY_TRAINING_MIN_ROUNDS)
 	private Integer training_round;
 	
+	@ApiModelProperty(example="1", required=true)
+	@NotNull(message=MessageCodeEnum.Constants.CREATE_DAY_TRAINING_REQUIRED_SEQUENCE)
+	@Min(value=1, message=MessageCodeEnum.Constants.CREATE_DAY_TRAINING_MIN_SEQUENCE)
+	private Integer sequence;
+	
+	private String description;
+	
 	@Valid
 	@ApiModelProperty(required=true)
 	@NotEmpty(message=MessageCodeEnum.Constants.CREATE_DAY_TRAINING_REQUIRED_MOVEMENTS)
@@ -60,6 +67,22 @@ public class CreateDayTrainingRequest implements Serializable {
 
 	public void setTraining_round(Integer training_round) {
 		this.training_round = training_round;
+	}
+
+	public Integer getSequence() {
+		return sequence;
+	}
+
+	public void setSequence(Integer sequence) {
+		this.sequence = sequence;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public List<DayTrainingMovementsRequest> getMovements() {

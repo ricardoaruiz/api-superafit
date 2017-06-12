@@ -20,7 +20,7 @@ public class TrainingMovement implements Serializable {
 	@Column(name="qt_rep")
 	private int qtRep;
 
-	@ManyToOne(cascade=CascadeType.PERSIST)
+	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
 	@MapsId("movementId")
 	@JoinColumn(name="movement_id")
 	private Movement movement;

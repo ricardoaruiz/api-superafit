@@ -1,23 +1,28 @@
 package br.com.superafit.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import br.com.superafit.controller.model.request.CreateDayTrainingRequest;
 import br.com.superafit.controller.model.request.DayTrainingMovementsRequest;
 import br.com.superafit.controller.model.response.GetDayTrainingResponse;
+import br.com.superafit.enumeration.MessageCodeEnum;
 import br.com.superafit.model.Training;
 import br.com.superafit.model.TrainingMovement;
 import br.com.superafit.model.TrainingMovementPK;
+import br.com.superafit.model.TrainingType;
 import br.com.superafit.repository.DayTrainingRepository;
 import br.com.superafit.repository.MovementRepository;
 import br.com.superafit.repository.TrainingMovementRepository;
 import br.com.superafit.repository.TrainingTypeRepository;
 import br.com.superafit.retrofit.service.model.FirebaseDataNotificationRequest;
+import br.com.superafit.service.exception.RegisterAlreadyExistsException;
 
 @Service
 public class DayTrainingService {
@@ -39,8 +44,9 @@ public class DayTrainingService {
 	@Autowired
 	private FirebaseService firebaseService;
 
-	public void create(CreateDayTrainingRequest request) {		
-		Training dayTraining = getDayTraining(request.getTraining_date());
+	public void create(CreateDayTrainingRequest request) {	
+		TrainingType type = trainingTypeRepository.findOne(Long.valueOf(request.getTraining_type()));
+		Training dayTraining = dayTrainingRepository.findByDateAndTrainingType(request.getTraining_date(), type);
 		
 		if(dayTraining != null) {
 			trainingMovementRepository.removeAll(dayTraining.getId());
@@ -48,7 +54,8 @@ public class DayTrainingService {
 		}
 		
 		Training saved = saveTraining(request);
-		sendNotification(saved);
+		//TODO essa notificação deveria ficar em um momento onde todos os treinos do dia já estivesse cadastrados;
+//		sendNotification(saved);
 	}
 
 	private Training saveTraining(CreateDayTrainingRequest request) {
@@ -58,21 +65,26 @@ public class DayTrainingService {
 			return t;
 		} catch(Exception e) {
 			LOG.error(e.getMessage(), e);
-			return null;
+			if(DataIntegrityViolationException.class.isInstance(e)) {
+				throw new RegisterAlreadyExistsException(MessageCodeEnum.Constants.CREATE_DAY_TRAINING_DUPLICATE_REGISTER);
+			}
+			throw e;
 		}
 	}
 
-	private void sendNotification(Training training) {
-		FirebaseDataNotificationRequest dataNotification = new FirebaseDataNotificationRequest("Superafit", "Treino do dia disponível");
-		dataNotification.putData("training", new GetDayTrainingResponse(training));			
-		firebaseService.send(dataNotification);
-	}
+//	private void sendNotification(Training training) {
+//		FirebaseDataNotificationRequest dataNotification = new FirebaseDataNotificationRequest("Superafit", "Treino do dia disponível");
+//		dataNotification.putData("training", new GetDayTrainingResponse(training));			
+//		firebaseService.send(dataNotification);
+//	}
 
 	private Training getTraining(CreateDayTrainingRequest request) {
 		Training t = new Training();
 		t.setDate(request.getTraining_date());
 		t.setQtRound(request.getTraining_round());
 		t.setTrainingType(trainingTypeRepository.findOne(Long.valueOf(request.getTraining_type())));
+		t.setSequence(request.getSequence());
+		t.setDescription(request.getDescription());
 		return t;
 	}
 	
@@ -94,8 +106,8 @@ public class DayTrainingService {
 		}
 	}
 
-	public Training getDayTraining(Date date) {
-		return dayTrainingRepository.findByDate(date);
+	public List<Training> getDayTraining(Date date) {
+		return dayTrainingRepository.findByDateOrderBySequence(date);
 	}
 	
 }

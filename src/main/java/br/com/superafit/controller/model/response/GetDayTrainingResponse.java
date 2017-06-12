@@ -6,67 +6,35 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import br.com.superafit.model.Movement;
 import br.com.superafit.model.Training;
-import br.com.superafit.model.TrainingMovement;
-import br.com.superafit.utils.DateFormatUtil;
 
 public class GetDayTrainingResponse implements Serializable {
 
 	private static final long serialVersionUID = -5465418877161987228L;
 
+	private List<DayTrainingDataResponse> data;
+	
 	@JsonIgnore
-	private Training training;
+	private List<Training> trainings;
 			
-	public GetDayTrainingResponse(Training training) {
-		this.training = training;
-	}
-	
-	public String getDate() {
-		if(hasTraining() && this.training.getDate() != null) {
-			return DateFormatUtil.toString(this.training.getDate(), DateFormatUtil.Format.DIA_MES_ANO);
-		}
-		return null;
+	public GetDayTrainingResponse(List<Training> trainings) {
+		this.trainings = trainings;
 	}
 
-	public String getType() {
-		if(hasTraining() && this.training.getTrainingType() != null) {
-			return this.training.getTrainingType().getName();
-		}
-		return null;
-	
-	}
-
-	public Integer getRound() {
+	public List<DayTrainingDataResponse> getData() {
+		
 		if(hasTraining()) {
-			return this.training.getQtRound();
-		}
-		return null;
-	}
-
-	public List<DayTrainingMovementResponse> getMovements() {
-		List<DayTrainingMovementResponse> toReturn = null;
-		if(hasMoviments()) {
-			toReturn = new ArrayList<DayTrainingMovementResponse>();
-			for (TrainingMovement trainingMovement : this.training.getTrainingMovements()) {
-				DayTrainingMovementResponse dm = new DayTrainingMovementResponse();
-				Movement movement = trainingMovement.getMovement();
-				dm.setName(movement.getName());
-				dm.setTranslate(movement.getTranslate());
-				dm.setDescription(movement.getDescription());
-				dm.setQtRep(trainingMovement.getQtRep());
-				toReturn.add(dm);
+			data = new ArrayList<>();
+			for (Training training : trainings) {
+				data.add(new DayTrainingDataResponse(training));
 			}
 		}
-		return toReturn;
+		
+		return data;
 	}
 	
 	public boolean hasTraining() {
-		return this.training != null;
-	}
-	
-	private boolean hasMoviments() {
-		return hasTraining() && this.training.getTrainingMovements() != null && !this.training.getTrainingMovements().isEmpty();
+		return trainings != null && !trainings.isEmpty();
 	}
 	
 }
