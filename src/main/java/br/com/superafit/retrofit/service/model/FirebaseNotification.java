@@ -9,7 +9,11 @@ public class FirebaseNotification implements Serializable {
 	private final String title;
 	
 	private final String body;
+
+	private String icon;
 	
+	private String sound;
+		
 	public FirebaseNotification(String title, String body) {
 		this.title = title;
 		this.body = body;
@@ -21,6 +25,25 @@ public class FirebaseNotification implements Serializable {
 
 	public String getBody() {
 		return body;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;		
+	}
+
+	public String getIcon() {
+		return icon == null ? "ic_notifications" : icon;
+	}
+
+	public String getSound() {
+		if(sound == null) {
+			return "default";
+		}
+		return sound;
+	}
+
+	public void setSound(String sound) {
+		this.sound = sound;
 	}
 	
 }

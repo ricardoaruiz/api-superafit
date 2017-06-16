@@ -53,7 +53,7 @@ public class DayTrainingService {
 			dayTrainingRepository.delete(dayTraining.getId());		
 		}
 		
-		Training saved = saveTraining(request);
+		saveTraining(request);
 	}
 
 	private Training saveTraining(CreateDayTrainingRequest request) {
@@ -71,9 +71,8 @@ public class DayTrainingService {
 	}
 
 	public void sendNotification() {
-		List<Training> dayTraining = getDayTraining(new Date());
 		FirebaseDataNotificationRequest dataNotification = new FirebaseDataNotificationRequest("Superafit", "Treino do dia disponível");
-		dataNotification.putData("training", new GetDayTrainingResponse(dayTraining));			
+		dataNotification.putData("training", new GetDayTrainingResponse(getDayTraining(new Date())));			
 		firebaseService.send(dataNotification);
 	}
 

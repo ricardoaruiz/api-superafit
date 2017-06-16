@@ -64,7 +64,7 @@ public class FirebaseService {
 	public void send(FirebaseRequest request) {		
 		List<Device> listAll = deviceService.listAll();
 		for (Device device : listAll) {
-			request.setTo(device.getId().getToken());			
+			request.setTo(device.getId().getToken());
 			callSend(request);			
 		}
 	}

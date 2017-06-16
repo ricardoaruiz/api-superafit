@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class FirebaseDataNotificationRequest extends FirebaseRequest implements Serializable {
 	
-	private static final long serialVersionUID = -3839541322366495242L;
+	private static final long serialVersionUID = -9178064301694319234L;
 
 	private final FirebaseNotification notification;
 	
@@ -29,5 +29,13 @@ public class FirebaseDataNotificationRequest extends FirebaseRequest implements 
 	public Object getData() {
 		return Collections.unmodifiableMap(data);
 	}
-
+	
+	public void setIconNotification(String icon) {
+		this.notification.setIcon(icon);
+	}
+	
+	public void setSoundNotificaiton(String sound) {
+		this.notification.setSound(sound);
+	}
+	
 }

@@ -13,9 +13,11 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long>{
 
 	List<Schedule> findAllByOrderByWeekDayAscScheduleStartAsc();
 	
+	Schedule findByWeekDayAndScheduleStart(int weekDay, Date scheduleStart);
+	
 	Schedule findByWeekDayAndScheduleStartAndScheduleEnd(int weekDay, Date scheduleStart, Date scheduleEnd);
 	
 	@Query("SELECT s FROM Schedule s WHERE s.weekDay = :weekDay AND ((:start > s.scheduleStart AND :start < s.scheduleEnd) OR (:end > s.scheduleStart AND :end < s.scheduleEnd))")
 	Schedule findConflictSchedule(@Param("weekDay") int weekDay, @Param("start") Date start, @Param("end") Date end);
-	
+		
 }

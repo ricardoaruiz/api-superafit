@@ -1,7 +1,9 @@
 package br.com.superafit.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
 @Embeddable
 public class DevicePK implements Serializable {

@@ -18,6 +18,7 @@ import br.com.superafit.enumeration.MessageCodeEnum;
 import br.com.superafit.enumeration.WeekDayEnum;
 import br.com.superafit.model.Schedule;
 import br.com.superafit.repository.ScheduleRepository;
+import br.com.superafit.retrofit.service.model.FirebaseDataNotificationRequest;
 import br.com.superafit.service.domain.ISchedule;
 import br.com.superafit.service.exception.InvalidScheduleException;
 import br.com.superafit.service.exception.ScheduleAlreadyExists;
@@ -34,6 +35,9 @@ public class ScheduleService {
 	@Autowired
 	private ScheduleRepository scheduleRepository;
 	
+	@Autowired
+	private FirebaseService firebaseService;
+	
 	public void insert(ISchedule schedule) {
 		
 		LOG.info("Inserindo horário");
@@ -48,6 +52,31 @@ public class ScheduleService {
 		
 	}
 
+	public ListScheduleResponse list() {
+		ListScheduleResponse response = null;
+				
+		List<Schedule> schedules = scheduleRepository.findAllByOrderByWeekDayAscScheduleStartAsc();
+		if(schedules != null && !schedules.isEmpty()) {
+			response = new ListScheduleResponse();
+			response.setSchedules(getSchedules(schedules));
+		}
+		
+		return response;
+	}
+	
+	public void remove(ISchedule request) {
+		Schedule schedule = scheduleRepository.findByWeekDayAndScheduleStart(request.getWeekDay(), request.getScheduleStart());
+		if(schedule != null) {
+			scheduleRepository.delete(schedule);
+		}
+	}
+	
+	public void sendScheduleNotification() {
+		FirebaseDataNotificationRequest request = new FirebaseDataNotificationRequest("Superafit", "Os horários da academia foram atualizados.");
+		request.putData("schedule", list());
+		firebaseService.send(request);
+	}
+	
 	private void validateScheduleDuration(ISchedule schedule) {
 		Long seconds = (schedule.getScheduleEnd().getTime() - schedule.getScheduleStart().getTime()) / ONE_SECOND_IN_MILLISECOND;
 		if(seconds != HOUR_IN_SECONDS) {
@@ -85,18 +114,6 @@ public class ScheduleService {
 		return s;
 	}
 	
-	public ListScheduleResponse list() {
-		ListScheduleResponse response = null;
-				
-		List<Schedule> schedules = scheduleRepository.findAllByOrderByWeekDayAscScheduleStartAsc();
-		if(schedules != null && !schedules.isEmpty()) {
-			response = new ListScheduleResponse();
-			response.setSchedules(getSchedules(schedules));
-		}
-		
-		return response;
-	}
-
 	private List<ScheduleResponse> getSchedules(List<Schedule> schedules) {
 		List<ScheduleResponse> listSchedules = new ArrayList<ScheduleResponse>();
 		

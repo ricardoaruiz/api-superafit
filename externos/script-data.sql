@@ -36,7 +36,7 @@ insert into training_type (name) values ('WOD 3');
 /*Movement==================================================================================*/
 select * from movement;
 
-insert into movement (name, translate, description) values ('Scketch','Scketch','Descrição Scketch');
+insert into movement (name, translate, description) values ('Sketch','Sketch','Descrição Sketch');
 insert into movement (name, translate, description) values ('Single Under','Corda simples','Descrição Single Under');
 insert into movement (name, translate, description) values ('Double Under','Corda dupla','Descrição Double Under');
 insert into movement (name, translate, description) values ('Jumping Jacks','Jumping Jacks','Descrição Jumping Jacks');
