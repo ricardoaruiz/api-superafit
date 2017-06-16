@@ -23,6 +23,7 @@ public enum MessageCodeEnum {
 	CREATE_DAY_TRAINING_REQUIRED_MOVEMENTS(Constants.CREATE_DAY_TRAINING_REQUIRED_MOVEMENTS),
 	CREATE_DAY_TRAINING_REQUIRED_MOVEMENT(Constants.CREATE_DAY_TRAINING_REQUIRED_MOVEMENT),
 	CREATE_DAY_TRAINING_REQUIRED_MOVEMENT_REPETITION(Constants.CREATE_DAY_TRAINING_REQUIRED_MOVEMENT_REPETITION),
+	CREATE_DAY_TRAINING_MOVEMENT_NOT_FOUND(Constants.CREATE_DAY_TRAINING_MOVEMENT_NOT_FOUND),
 
 	//create schedule
 	CREATE_SCHEDULE_ALREADY_EXISTS(Constants.CREATE_SCHEDULE_ALREADY_EXISTS),
@@ -72,6 +73,7 @@ public enum MessageCodeEnum {
 		public static final String CREATE_DAY_TRAINING_REQUIRED_SEQUENCE = "create_day_training_required_sequence";
 		public static final String CREATE_DAY_TRAINING_MIN_SEQUENCE = "create_day_training_min_sequence";
 		public static final String CREATE_DAY_TRAINING_DUPLICATE_REGISTER = "create_day_training_duplicate_register";
+		public static final String CREATE_DAY_TRAINING_MOVEMENT_NOT_FOUND = "create_day_training_movement_not_found";
 		
 		//create movement
 		public static final String CREATE_MOVEMENT_REQUIRED_NAME = "create_movement_required_name";
@@ -85,6 +87,7 @@ public enum MessageCodeEnum {
 		public static final String CREATE_SCHEDULE_REQUIRED_START = "create_schedule_required_start";
 		public static final String CREATE_SCHEDULE_REQUIRED_END = "create_schedule_required_end";
 		public static final String CREATE_SCHEDULE_START_MUST_GREATER_THAN_END = "create_schedule_start_must_greater_than_end";
+		
 		
 	}
 	

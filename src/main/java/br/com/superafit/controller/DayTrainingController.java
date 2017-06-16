@@ -29,7 +29,7 @@ public class DayTrainingController {
 	@Autowired
 	private DayTrainingService trainingDayService;
 		
-	@ApiOperation(value = "getWod", nickname = "getWod")		
+	@ApiOperation(value = "getTraining", nickname = "getTraining")		
 	@ApiResponses(value = { 
             @ApiResponse(code = 200, message = "Ok", response = ListScheduleResponse.class),
             @ApiResponse(code = 204, message = "No Content"),
@@ -49,13 +49,18 @@ public class DayTrainingController {
 	@ApiResponses(value = { 
             @ApiResponse(code = 201, message = "Created"),
             @ApiResponse(code = 400, message = "Bad Request"),
-            @ApiResponse(code = 500, message = "Internal Server Error")})	
+            @ApiResponse(code = 500, message = "Internal Server Error")})
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> create(@RequestBody @Valid CreateDayTrainingRequest request) {		
 		trainingDayService.create(request);	
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
+
+	@ApiOperation(value = "notification", nickname = "notification")
+	@ApiResponses(value = { 
+            @ApiResponse(code = 204, message = "No Content"),
+            @ApiResponse(code = 500, message = "Internal Server Error")})
 	
 	@RequestMapping(value="notification", method = RequestMethod.POST)
 	public ResponseEntity<Void> notification() {

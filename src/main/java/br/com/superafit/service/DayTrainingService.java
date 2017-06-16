@@ -22,6 +22,7 @@ import br.com.superafit.repository.MovementRepository;
 import br.com.superafit.repository.TrainingMovementRepository;
 import br.com.superafit.repository.TrainingTypeRepository;
 import br.com.superafit.retrofit.service.model.FirebaseDataNotificationRequest;
+import br.com.superafit.service.exception.MovementNotFoundException;
 import br.com.superafit.service.exception.RegisterAlreadyExistsException;
 
 @Service
@@ -44,7 +45,13 @@ public class DayTrainingService {
 	@Autowired
 	private FirebaseService firebaseService;
 
+	public List<Training> getDayTraining(Date date) {
+		return dayTrainingRepository.findByDateOrderBySequence(date);
+	}
+	
 	public void create(CreateDayTrainingRequest request) {	
+		validateMovements(request);
+		
 		TrainingType type = trainingTypeRepository.findOne(Long.valueOf(request.getTraining_type()));
 		Training dayTraining = dayTrainingRepository.findByDateAndTrainingType(request.getTraining_date(), type);
 		
@@ -54,6 +61,22 @@ public class DayTrainingService {
 		}
 		
 		saveTraining(request);
+	}
+
+	public void sendNotification() {
+		FirebaseDataNotificationRequest dataNotification = new FirebaseDataNotificationRequest("Superafit", "Treino do dia disponível");
+		dataNotification.putData("training", new GetDayTrainingResponse(getDayTraining(new Date())));			
+		firebaseService.send(dataNotification);
+	}
+	
+	private void validateMovements(CreateDayTrainingRequest request) {
+		if(request != null && request.getMovements() != null && !request.getMovements().isEmpty()) {
+			for (DayTrainingMovementsRequest movement : request.getMovements()) {
+				if(movementRepository.findOne(movement.getMovement().longValue()) == null) {
+					throw new MovementNotFoundException(MessageCodeEnum.Constants.CREATE_DAY_TRAINING_MOVEMENT_NOT_FOUND);
+				}
+			}
+		}
 	}
 
 	private Training saveTraining(CreateDayTrainingRequest request) {
@@ -68,12 +91,6 @@ public class DayTrainingService {
 			}
 			throw e;
 		}
-	}
-
-	public void sendNotification() {
-		FirebaseDataNotificationRequest dataNotification = new FirebaseDataNotificationRequest("Superafit", "Treino do dia disponível");
-		dataNotification.putData("training", new GetDayTrainingResponse(getDayTraining(new Date())));			
-		firebaseService.send(dataNotification);
 	}
 
 	private Training getTraining(CreateDayTrainingRequest request) {
@@ -102,10 +119,6 @@ public class DayTrainingService {
 			
 			t.addTrainingMovement(tm);			
 		}
-	}
-
-	public List<Training> getDayTraining(Date date) {
-		return dayTrainingRepository.findByDateOrderBySequence(date);
 	}
 	
 }
