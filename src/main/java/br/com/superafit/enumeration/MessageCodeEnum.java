@@ -6,6 +6,7 @@ public enum MessageCodeEnum {
 	LOGIN_REQUIRED_LOGIN(Constants.LOGIN_REQUIRED_LOGIN),
 	LOGIN_REQUIRED_PASSWORD(Constants.LOGIN_REQUIRED_PASSWORD),
 	LOGIN_INVALID_PASSWORD_LENGTH(Constants.LOGIN_INVALID_PASSWORD_LENGTH),
+	LOGIN_INVALID_EMAIL(Constants.LOGIN_INVALID_EMAIL),
 	
 	//create user
 	CREATE_USER_REQUIRED_LOGIN(Constants.CREATE_USER_REQUIRED_LOGIN),	
@@ -15,6 +16,7 @@ public enum MessageCodeEnum {
 	CREATE_USER_INVALID_PASSWORD2_LENGTH(Constants.CREATE_USER_INVALID_PASSWORD2_LENGTH),	
 	CREATE_USER_WRONG_PASSWORD(Constants.CREATE_USER_WRONG_PASSWORD), 	
 	CREATE_USER_LOGIN_ALREAD_EXISTS(Constants.CREATE_USER_LOGIN_ALREAD_EXISTS),
+	CREATE_USER_INVALID_EMAIL(Constants.CREATE_USER_INVALID_EMAIL),
 	
 	//create day training
 	CREATE_DAY_TRAINING_REQUIRED_DATE(Constants.CREATE_DAY_TRAINING_REQUIRED_DATE),
@@ -51,6 +53,7 @@ public enum MessageCodeEnum {
 		public static final String LOGIN_REQUIRED_LOGIN = "login.required.login";
 		public static final String LOGIN_REQUIRED_PASSWORD = "login.required.password";
 		public static final String LOGIN_INVALID_PASSWORD_LENGTH = "login.invalid.password.length";
+		public static final String LOGIN_INVALID_EMAIL = "login.invalid.email";
 		
 		//create user
 		public static final String CREATE_USER_REQUIRED_LOGIN = "create.user.required.login";
@@ -60,6 +63,7 @@ public enum MessageCodeEnum {
 		public static final String CREATE_USER_INVALID_PASSWORD2_LENGTH = "create.user.invalid.password2.length";		
 		public static final String CREATE_USER_WRONG_PASSWORD = "create_user_wrong_password";
 		public static final String CREATE_USER_LOGIN_ALREAD_EXISTS = "create_user_already_exists";
+		public static final String CREATE_USER_INVALID_EMAIL = "create_user_invalid_email";
 		
 		//create day training
 		public static final String CREATE_DAY_TRAINING_REQUIRED_DATE = "create_day_training_required_date";
@@ -87,6 +91,8 @@ public enum MessageCodeEnum {
 		public static final String CREATE_SCHEDULE_REQUIRED_START = "create_schedule_required_start";
 		public static final String CREATE_SCHEDULE_REQUIRED_END = "create_schedule_required_end";
 		public static final String CREATE_SCHEDULE_START_MUST_GREATER_THAN_END = "create_schedule_start_must_greater_than_end";
+		
+		
 		
 		
 	}

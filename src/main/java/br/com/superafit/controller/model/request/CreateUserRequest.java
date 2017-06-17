@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import br.com.superafit.enumeration.MessageCodeEnum;
@@ -15,6 +16,7 @@ public class CreateUserRequest implements Serializable {
 
 	@ApiModelProperty(example="myuser", required=true)
 	@NotEmpty(message=MessageCodeEnum.Constants.CREATE_USER_REQUIRED_LOGIN)
+	@Email(message=MessageCodeEnum.Constants.CREATE_USER_INVALID_EMAIL)
 	private String login;
 	
 	@ApiModelProperty(example="123456", required=true)

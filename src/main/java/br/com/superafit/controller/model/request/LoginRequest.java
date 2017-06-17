@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import br.com.superafit.enumeration.MessageCodeEnum;
@@ -13,8 +14,9 @@ public class LoginRequest implements Serializable {
 
 	private static final long serialVersionUID = 1205720579537231838L;
 
-	@ApiModelProperty(example="myuser", required=true)
+	@ApiModelProperty(example="myuser@email.com", required=true)
 	@NotEmpty(message=MessageCodeEnum.Constants.LOGIN_REQUIRED_LOGIN)
+	@Email(message=MessageCodeEnum.Constants.LOGIN_INVALID_EMAIL)
 	private String login;
 	
 	@ApiModelProperty(example="123456", required=true)
