@@ -35,7 +35,12 @@ public enum MessageCodeEnum {
 	CREATE_SCHEDULE_REQUIRED_END(Constants.CREATE_SCHEDULE_REQUIRED_END),
 	CREATE_SCHEDULE_START_MUST_GREATER_THAN_END(Constants.CREATE_SCHEDULE_START_MUST_GREATER_THAN_END),
 	CREATE_DAY_TRAINING_REQUIRED_SEQUENCE(Constants.CREATE_DAY_TRAINING_REQUIRED_SEQUENCE),
-	CREATE_DAY_TRAINING_MIN_SEQUENCE(Constants.CREATE_DAY_TRAINING_MIN_SEQUENCE);
+	CREATE_DAY_TRAINING_MIN_SEQUENCE(Constants.CREATE_DAY_TRAINING_MIN_SEQUENCE),
+
+	//send message
+	SEND_MESSAGE_REQUIRED_ID(Constants.SEND_MESSAGE_REQUIRED_ID),
+	SEND_MESSAGE_REQUIRED_TEXT(Constants.SEND_MESSAGE_REQUIRED_TEXT),
+	SEND_MESSAGE_NOT_FOUND(Constants.SEND_MESSAGE_NOT_FOUND);
 	
 	private String code;
 	
@@ -92,8 +97,10 @@ public enum MessageCodeEnum {
 		public static final String CREATE_SCHEDULE_REQUIRED_END = "create_schedule_required_end";
 		public static final String CREATE_SCHEDULE_START_MUST_GREATER_THAN_END = "create_schedule_start_must_greater_than_end";
 		
-		
-		
+		//send message
+		public static final String SEND_MESSAGE_REQUIRED_ID = "send_message_required_id";
+		public static final String SEND_MESSAGE_REQUIRED_TEXT = "send_message_required_text";
+		public static final String SEND_MESSAGE_NOT_FOUND = "send_message_not_found";
 		
 	}
 	

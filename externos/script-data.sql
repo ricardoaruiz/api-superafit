@@ -1,3 +1,6 @@
+/* Temp User ===============================================================================*/
+insert into user values ('1','generic.user@superafit.com.br','111111');
+
 /*Schedule==================================================================================*/
 select * from schedule order by week_day, schedule_start;
 
@@ -48,8 +51,6 @@ insert into movement (name, translate, description) values ('Wall Ball','Bola na
 insert into movement (name, translate, description) values ('Pull Up','Barra','Descrição Pull Up');
 insert into movement (name, translate, description) values ('Push Up','Flexão de braço','Descrição Push Up');
 insert into movement (name, translate, description) values ('Clean and Jerk','Clean and Jerk','Descrição Clean and Jeark');
-
-
 /*==========================================================================================*/
 
 
