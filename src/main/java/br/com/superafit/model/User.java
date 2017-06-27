@@ -1,11 +1,9 @@
 package br.com.superafit.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -21,9 +19,6 @@ public class User implements Serializable {
 	private String login;
 
 	private String password;
-
-	@OneToMany(mappedBy="user")
-	private List<Device> devices;
 
 	public User() {
 	}
@@ -50,28 +45,6 @@ public class User implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public List<Device> getDevices() {
-		return this.devices;
-	}
-
-	public void setDevices(List<Device> devices) {
-		this.devices = devices;
-	}
-
-	public Device addDevice(Device device) {
-		getDevices().add(device);
-		device.setUser(this);
-
-		return device;
-	}
-
-	public Device removeDevice(Device device) {
-		getDevices().remove(device);
-		device.setUser(null);
-
-		return device;
 	}
 
 }

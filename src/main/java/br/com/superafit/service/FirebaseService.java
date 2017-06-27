@@ -19,6 +19,7 @@ import br.com.superafit.retrofit.FirebaseServiceFactory;
 import br.com.superafit.retrofit.service.model.FirebaseRequest;
 import br.com.superafit.retrofit.service.model.FirebaseResponse;
 import br.com.superafit.retrofit.service.model.FirebaseValidationRequest;
+import br.com.superafit.retrofit.service.model.FirebaseValidationResultResponse;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -64,7 +65,7 @@ public class FirebaseService {
 	public void send(FirebaseRequest request) {		
 		List<Device> listAll = deviceService.listAll();
 		for (Device device : listAll) {
-			request.setTo(device.getId().getToken());
+			request.setTo(device.getToken());
 			callSend(request);			
 		}
 	}
@@ -82,10 +83,23 @@ public class FirebaseService {
 			
 			LOG.info("Resposta Firebase: " + om.writeValueAsString(response.body()));
 			
+			removeUnregisteredDevices(request, response.body());
+			
 			return response;
 		} catch (IOException e) {
 			LOG.error(e.getMessage(), e);
 			return null;
 		}		
+	}
+
+	private void removeUnregisteredDevices(FirebaseRequest request, FirebaseResponse responseBody) {
+		if(responseBody.getFailure().intValue() == 1) {
+			for(FirebaseValidationResultResponse erro : responseBody.getResults()) {
+				if(erro.getError().equals("NotRegistered")){
+					deviceService.remove(request.getTo());
+					break;
+				}
+			}
+		}
 	}
 }

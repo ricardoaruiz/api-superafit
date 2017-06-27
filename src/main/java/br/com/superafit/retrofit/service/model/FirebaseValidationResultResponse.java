@@ -8,10 +8,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class FirebaseValidationResultResponse implements Serializable {
 
-	private static final long serialVersionUID = 5725114575379065442L;
-	
+	private static final long serialVersionUID = 3600571790037650153L;
+
 	@JsonProperty("message_id")
 	private String messageId;
+	
+	private String error;
 
 	public String getMessageId() {
 		return messageId;
@@ -19,6 +21,14 @@ public class FirebaseValidationResultResponse implements Serializable {
 
 	public void setMessageId(String messageId) {
 		this.messageId = messageId;
+	}
+
+	public String getError() {
+		return error;
+	}
+
+	public void setError(String error) {
+		this.error = error;
 	}
 	
 }

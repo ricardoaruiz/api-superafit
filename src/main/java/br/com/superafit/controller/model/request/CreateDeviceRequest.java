@@ -9,21 +9,9 @@ import br.com.superafit.service.domain.IDevice;
 public class CreateDeviceRequest implements IDevice, Serializable {
 
 	private static final long serialVersionUID = -8671798117904686892L;
-
-	@JsonProperty("user_id")
-	private String userId;
 	
 	@JsonProperty("token")
 	private String token;
-
-	@Override
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
 
 	@Override
 	public String getToken() {

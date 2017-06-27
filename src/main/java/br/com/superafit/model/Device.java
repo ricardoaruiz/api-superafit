@@ -2,42 +2,41 @@ package br.com.superafit.model;
 
 import java.io.Serializable;
 
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="device")
 public class Device implements Serializable {
 	
-	private static final long serialVersionUID = 4617965438439456719L;
+	private static final long serialVersionUID = 6053724746636677728L;
 
-	@EmbeddedId
-	private DevicePK id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
 
-	@ManyToOne
-	@MapsId("userId")
-	private User user;
+	private String token;
 
 	public Device() {
 	}
 
-	public DevicePK getId() {
-		return this.id;
+	public Long getId() {
+		return id;
 	}
 
-	public void setId(DevicePK id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public User getUser() {
-		return this.user;
+	public String getToken() {
+		return token;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 }
