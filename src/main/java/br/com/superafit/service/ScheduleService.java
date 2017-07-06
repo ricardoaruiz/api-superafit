@@ -15,8 +15,10 @@ import br.com.superafit.controller.model.response.DayScheduleResponse;
 import br.com.superafit.controller.model.response.ListScheduleResponse;
 import br.com.superafit.controller.model.response.ScheduleResponse;
 import br.com.superafit.enumeration.MessageCodeEnum;
+import br.com.superafit.enumeration.SyncControlEnum;
 import br.com.superafit.enumeration.WeekDayEnum;
 import br.com.superafit.model.Schedule;
+import br.com.superafit.model.SyncControl;
 import br.com.superafit.repository.ScheduleRepository;
 import br.com.superafit.retrofit.service.model.FirebaseDataNotificationRequest;
 import br.com.superafit.service.domain.ISchedule;
@@ -34,9 +36,12 @@ public class ScheduleService {
 	
 	@Autowired
 	private ScheduleRepository scheduleRepository;
-	
+		
 	@Autowired
 	private FirebaseService firebaseService;
+	
+	@Autowired
+	private SyncControlService syncControlService;
 	
 	public void insert(ISchedule schedule) {
 		
@@ -49,6 +54,7 @@ public class ScheduleService {
 		verifyAlreadyExist(s);
 		
 		scheduleRepository.save(s);
+		syncControlService.desync(SyncControlEnum.SCHEDULE.getValue());
 		
 	}
 
@@ -59,6 +65,8 @@ public class ScheduleService {
 		if(schedules != null && !schedules.isEmpty()) {
 			response = new ListScheduleResponse();
 			response.setSchedules(getSchedules(schedules));
+			SyncControl syncControl = syncControlService.getSyncControl(SyncControlEnum.SCHEDULE.getValue());		
+			response.setSync(syncControl.isSync());
 		}
 		
 		return response;
@@ -68,6 +76,7 @@ public class ScheduleService {
 		Schedule schedule = scheduleRepository.findByWeekDayAndScheduleStart(request.getWeekDay(), request.getScheduleStart());
 		if(schedule != null) {
 			scheduleRepository.delete(schedule);
+			syncControlService.desync(SyncControlEnum.SCHEDULE.getValue());
 		}
 	}
 	
@@ -75,6 +84,7 @@ public class ScheduleService {
 		FirebaseDataNotificationRequest request = new FirebaseDataNotificationRequest("Superafit", "Os horários da academia foram atualizados.");
 		request.putData("schedule", list());
 		firebaseService.send(request);
+		syncControlService.sync(SyncControlEnum.SCHEDULE.getValue());
 	}
 	
 	private void validateScheduleDuration(ISchedule schedule) {
