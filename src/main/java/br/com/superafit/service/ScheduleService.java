@@ -109,8 +109,8 @@ public class ScheduleService {
 			throw new ScheduleAlreadyExists(MessageCodeEnum.Constants.CREATE_SCHEDULE_ALREADY_EXISTS);
 		}
 		
-		Schedule scheduleFound1 = scheduleRepository.findConflictSchedule(s.getWeekDay(), s.getScheduleStart(), s.getScheduleEnd());		
-		if(scheduleFound1 != null) {
+		List<Schedule> scheduleFound1 = scheduleRepository.findConflictSchedule(s.getWeekDay(), s.getScheduleStart(), s.getScheduleEnd());		
+		if(scheduleFound1 != null && !scheduleFound1.isEmpty()) {
 			LOG.info("Inserindo horário - horário já existente.");
 			throw new ScheduleAlreadyExists(MessageCodeEnum.Constants.CREATE_SCHEDULE_ALREADY_EXISTS);
 		}
