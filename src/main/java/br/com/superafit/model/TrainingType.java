@@ -17,13 +17,15 @@ import javax.persistence.Table;
 @Table(name="training_type")
 public class TrainingType implements Serializable {
 
-	private static final long serialVersionUID = -6428665467552975508L;
+	private static final long serialVersionUID = 5066592957047492147L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
 	private String name;
+	
+	private Integer sequence;
 
 	public TrainingType() {
 	}
@@ -42,6 +44,14 @@ public class TrainingType implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Integer getSequence() {
+		return sequence;
+	}
+
+	public void setSequence(Integer sequence) {
+		this.sequence = sequence;
 	}
 
 }

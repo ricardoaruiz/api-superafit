@@ -60,6 +60,7 @@ public class DayTrainingService {
 			dayTrainingRepository.delete(dayTraining.getId());		
 		}
 		
+		request.setSequence(type.getSequence());
 		saveTraining(request);
 	}
 

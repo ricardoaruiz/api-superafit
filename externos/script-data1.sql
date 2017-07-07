@@ -1,27 +1,10 @@
-insert into schedule (week_day, schedule_start, schedule_end) values (1, '06:30','07:30');
-insert into schedule (week_day, schedule_start, schedule_end) values (1, '08:30','09:30');
-insert into schedule (week_day, schedule_start, schedule_end) values (1, '18:00','19:00');
-insert into schedule (week_day, schedule_start, schedule_end) values (2, '06:00','07:00');
-insert into schedule (week_day, schedule_start, schedule_end) values (2, '08:00','09:00');
-insert into schedule (week_day, schedule_start, schedule_end) values (2, '11:00','12:00');
-insert into schedule (week_day, schedule_start, schedule_end) values (3, '06:00','07:00');
-insert into schedule (week_day, schedule_start, schedule_end) values (3, '08:00','09:00');
-insert into schedule (week_day, schedule_start, schedule_end) values (3, '11:00','12:00');
-insert into schedule (week_day, schedule_start, schedule_end) values (3, '13:00','14:00');
-insert into schedule (week_day, schedule_start, schedule_end) values (3, '14:00','15:00');
-insert into schedule (week_day, schedule_start, schedule_end) values (4, '06:00','07:00');
-insert into schedule (week_day, schedule_start, schedule_end) values (4, '08:00','09:00');
-insert into schedule (week_day, schedule_start, schedule_end) values (4, '11:00','12:00');
-insert into schedule (week_day, schedule_start, schedule_end) values (4, '13:00','14:00');
-insert into schedule (week_day, schedule_start, schedule_end) values (4, '14:00','15:00');
-insert into schedule (week_day, schedule_start, schedule_end) values (4, '16:00','17:00');
-/**/
-insert into training_type (name) values ('Aquecimento');
-insert into training_type (name) values ('Técnica');
-insert into training_type (name) values ('WOD 1');
-insert into training_type (name) values ('WOD 2');
-insert into training_type (name) values ('WOD 3');
-/**/
+/*Training Type*/
+insert into training_type (name, sequence) values ('Aquecimento',1);
+insert into training_type (name, sequence) values ('Técnica',2);
+insert into training_type (name, sequence) values ('WOD 1',3);
+insert into training_type (name, sequence) values ('WOD 2',4);
+insert into training_type (name, sequence) values ('WOD 3',5);
+/*Movement*/
 insert into movement (name, translate, description) values ('Scketch','Scketch','Descrição Scketch');
 insert into movement (name, translate, description) values ('Single Under','Corda simples','Descrição Single Under');
 insert into movement (name, translate, description) values ('Double Under','Corda dupla','Descrição Double Under');

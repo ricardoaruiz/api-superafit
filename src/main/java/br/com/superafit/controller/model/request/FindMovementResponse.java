@@ -17,6 +17,7 @@ public class FindMovementResponse implements Serializable {
 		this.movements = new ArrayList<MovementResponse>();
 		for (Movement mov : movs) {
 			MovementResponse m = new MovementResponse();
+			m.setId(mov.getId().toString());
 			m.setName(mov.getName());
 			m.setTranslate(mov.getTranslate());
 			m.setDescription(mov.getDescription());

@@ -12,7 +12,7 @@ public interface MovementRepository extends JpaRepository<Movement, Long>{
 
 	Movement findByName(String name);
 	
-	@Query("SELECT m FROM Movement m WHERE :name IS NULL OR name LIKE :name")
+	@Query("SELECT m FROM Movement m WHERE :name IS NULL OR name LIKE :name ORDER BY m.name")
 	List<Movement> findByNameLike(@Param("name") String name);
 	
 }

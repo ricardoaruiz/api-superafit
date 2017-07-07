@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.superafit.enumeration.MessageCodeEnum;
 import io.swagger.annotations.ApiModelProperty;
@@ -33,9 +34,10 @@ public class CreateDayTrainingRequest implements Serializable {
 	@Min(value=1, message=MessageCodeEnum.Constants.CREATE_DAY_TRAINING_MIN_ROUNDS)
 	private Integer training_round;
 	
-	@ApiModelProperty(example="1", required=true)
-	@NotNull(message=MessageCodeEnum.Constants.CREATE_DAY_TRAINING_REQUIRED_SEQUENCE)
-	@Min(value=1, message=MessageCodeEnum.Constants.CREATE_DAY_TRAINING_MIN_SEQUENCE)
+	//@ApiModelProperty(example="1", required=true)
+	//@NotNull(message=MessageCodeEnum.Constants.CREATE_DAY_TRAINING_REQUIRED_SEQUENCE)
+	//@Min(value=1, message=MessageCodeEnum.Constants.CREATE_DAY_TRAINING_MIN_SEQUENCE)
+	@JsonIgnore
 	private Integer sequence;
 	
 	private String description;
