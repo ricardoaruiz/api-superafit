@@ -65,8 +65,10 @@ public class ScheduleService {
 		if(schedules != null && !schedules.isEmpty()) {
 			response = new ListScheduleResponse();
 			response.setSchedules(getSchedules(schedules));
-			SyncControl syncControl = syncControlService.getSyncControl(SyncControlEnum.SCHEDULE.getValue());		
-			response.setSync(syncControl.isSync());
+			SyncControl syncControl = syncControlService.getSyncControl(SyncControlEnum.SCHEDULE.getValue());
+			if(syncControl != null) {
+				response.setSync(syncControl.isSync());
+			}
 		}
 		
 		return response;
