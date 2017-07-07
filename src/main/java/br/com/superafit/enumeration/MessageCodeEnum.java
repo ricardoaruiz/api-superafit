@@ -33,7 +33,7 @@ public enum MessageCodeEnum {
 	CREATE_SCHEDULE_REQUIRED_WEEKDAY(Constants.CREATE_SCHEDULE_REQUIRED_WEEKDAY),
 	CREATE_SCHEDULE_REQUIRED_START(Constants.CREATE_SCHEDULE_REQUIRED_START),
 	CREATE_SCHEDULE_REQUIRED_END(Constants.CREATE_SCHEDULE_REQUIRED_END),
-	CREATE_SCHEDULE_START_MUST_GREATER_THAN_END(Constants.CREATE_SCHEDULE_START_MUST_GREATER_THAN_END),
+	CREATE_SCHEDULE_START_MUST_GREATER_THAN_END(Constants.CREATE_SCHEDULE_END_MUST_GREATER_THAN_START),
 	CREATE_DAY_TRAINING_REQUIRED_SEQUENCE(Constants.CREATE_DAY_TRAINING_REQUIRED_SEQUENCE),
 	CREATE_DAY_TRAINING_MIN_SEQUENCE(Constants.CREATE_DAY_TRAINING_MIN_SEQUENCE),
 
@@ -95,7 +95,7 @@ public enum MessageCodeEnum {
 		public static final String CREATE_SCHEDULE_REQUIRED_WEEKDAY = "create_schedule_required_weekday";
 		public static final String CREATE_SCHEDULE_REQUIRED_START = "create_schedule_required_start";
 		public static final String CREATE_SCHEDULE_REQUIRED_END = "create_schedule_required_end";
-		public static final String CREATE_SCHEDULE_START_MUST_GREATER_THAN_END = "create_schedule_start_must_greater_than_end";
+		public static final String CREATE_SCHEDULE_END_MUST_GREATER_THAN_START = "create_schedule_start_must_greater_than_end";
 		
 		//send message
 		public static final String SEND_MESSAGE_REQUIRED_ID = "send_message_required_id";

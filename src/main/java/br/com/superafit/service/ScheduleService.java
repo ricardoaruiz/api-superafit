@@ -92,15 +92,15 @@ public class ScheduleService {
 	private void validateScheduleDuration(ISchedule schedule) {
 		Long seconds = (schedule.getScheduleEnd().getTime() - schedule.getScheduleStart().getTime()) / ONE_SECOND_IN_MILLISECOND;
 		if(seconds != HOUR_IN_SECONDS) {
-			LOG.info("Inserindo horário - duração de inválida.");
+			LOG.info("Inserindo horário - duração inválida.");
 			throw new InvalidScheduleException(MessageCodeEnum.Constants.CREATE_SCHEDULE_INVALID_SCHEDULE);
 		}
 	}
 
 	private void validateScheduleRange(ISchedule schedule) {
 		if(schedule.getScheduleStart().equals(schedule.getScheduleEnd()) || schedule.getScheduleStart().after(schedule.getScheduleEnd())) {
-			LOG.info("Inserindo horário - horário inicício menor que horário fim");
-			throw new InvalidScheduleException(MessageCodeEnum.Constants.CREATE_SCHEDULE_START_MUST_GREATER_THAN_END);			
+			LOG.info("Inserindo horário - horário inicício menor ou igual que horário fim");
+			throw new InvalidScheduleException(MessageCodeEnum.Constants.CREATE_SCHEDULE_END_MUST_GREATER_THAN_START);			
 		}
 	}
 

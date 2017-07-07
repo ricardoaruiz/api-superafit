@@ -1,5 +1,7 @@
 package br.com.superafit.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -19,11 +21,14 @@ import br.com.superafit.service.exception.ServiceException;
 @ControllerAdvice
 public class ControllerExceptionHandler {
 
+	private final Logger LOG = LoggerFactory.getLogger(ControllerExceptionHandler.class);
+	
 	@Autowired
 	private MessageSource messageSource;
 	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Void> genericError(Exception e) {
+		LOG.error("GenericError: ", e);
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); 
 	}
 	
