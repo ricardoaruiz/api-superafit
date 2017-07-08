@@ -56,6 +56,7 @@ public class DayTrainingDataResponse implements Serializable {
 			for (TrainingMovement trainingMovement : this.training.getTrainingMovements()) {
 				DayTrainingMovementResponse dm = new DayTrainingMovementResponse();
 				Movement movement = trainingMovement.getMovement();
+				dm.setId(movement.getId().toString());
 				dm.setName(movement.getName());
 				dm.setTranslate(movement.getTranslate());
 				dm.setDescription(movement.getDescription());
