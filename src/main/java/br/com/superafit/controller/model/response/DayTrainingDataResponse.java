@@ -20,6 +20,13 @@ public class DayTrainingDataResponse implements Serializable {
 		this.training = training;
 	}
 
+	public String getId() {
+		if(hasTraining()) {
+			return this.training.getId().toString();
+		}
+		return null;
+	}
+	
 	public String getDate() {
 		if(hasTraining() && this.training.getDate() != null) {
 			return DateFormatUtil.toString(this.training.getDate(), DateFormatUtil.Format.DIA_MES_ANO);
