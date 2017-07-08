@@ -24,6 +24,7 @@ import br.com.superafit.repository.TrainingTypeRepository;
 import br.com.superafit.retrofit.service.model.FirebaseDataNotificationRequest;
 import br.com.superafit.service.exception.MovementNotFoundException;
 import br.com.superafit.service.exception.RegisterAlreadyExistsException;
+import br.com.superafit.service.exception.TrainningAlreadyExistsException;
 
 @Service
 public class DayTrainingService {
@@ -56,8 +57,7 @@ public class DayTrainingService {
 		Training dayTraining = dayTrainingRepository.findByDateAndTrainingType(request.getTraining_date(), type);
 		
 		if(dayTraining != null) {
-			trainingMovementRepository.removeAll(dayTraining.getId());
-			dayTrainingRepository.delete(dayTraining.getId());		
+			throw new TrainningAlreadyExistsException(MessageCodeEnum.Constants.CREATE_DAY_TRAINING_ALREADY_EXISTS);		
 		}
 		
 		request.setSequence(type.getSequence());

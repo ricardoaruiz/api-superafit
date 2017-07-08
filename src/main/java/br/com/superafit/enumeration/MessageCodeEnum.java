@@ -83,6 +83,7 @@ public enum MessageCodeEnum {
 		public static final String CREATE_DAY_TRAINING_MIN_SEQUENCE = "create_day_training_min_sequence";
 		public static final String CREATE_DAY_TRAINING_DUPLICATE_REGISTER = "create_day_training_duplicate_register";
 		public static final String CREATE_DAY_TRAINING_MOVEMENT_NOT_FOUND = "create_day_training_movement_not_found";
+		public static final String CREATE_DAY_TRAINING_ALREADY_EXISTS = "create_day_training_already_exists";
 		
 		//create movement
 		public static final String CREATE_MOVEMENT_REQUIRED_NAME = "create_movement_required_name";
