@@ -13,6 +13,8 @@ import br.com.superafit.controller.model.request.CreateDayTrainingRequest;
 import br.com.superafit.controller.model.request.DayTrainingMovementsRequest;
 import br.com.superafit.controller.model.response.GetDayTrainingResponse;
 import br.com.superafit.enumeration.MessageCodeEnum;
+import br.com.superafit.enumeration.SyncControlEnum;
+import br.com.superafit.model.SyncControl;
 import br.com.superafit.model.Training;
 import br.com.superafit.model.TrainingMovement;
 import br.com.superafit.model.TrainingMovementPK;
@@ -22,6 +24,7 @@ import br.com.superafit.repository.MovementRepository;
 import br.com.superafit.repository.TrainingMovementRepository;
 import br.com.superafit.repository.TrainingTypeRepository;
 import br.com.superafit.retrofit.service.model.FirebaseDataNotificationRequest;
+import br.com.superafit.service.domain.ListTrainning;
 import br.com.superafit.service.exception.MovementNotFoundException;
 import br.com.superafit.service.exception.RegisterAlreadyExistsException;
 import br.com.superafit.service.exception.TrainningAlreadyExistsException;
@@ -45,9 +48,22 @@ public class DayTrainingService {
 	
 	@Autowired
 	private FirebaseService firebaseService;
+	
+	@Autowired
+	private SyncControlService syncControlService;
 
-	public List<Training> getDayTraining(Date date) {
-		return dayTrainingRepository.findByDateOrderBySequence(date);
+	public ListTrainning getDayTraining(Date date) {
+		List<Training> trainnings = dayTrainingRepository.findByDateOrderBySequence(date);
+		
+		ListTrainning response = new ListTrainning();
+		response.setTrainnings(trainnings);
+		
+		SyncControl syncControl = syncControlService.getSyncControl(SyncControlEnum.TRAINNING.getValue());
+		if(syncControl != null) {
+			response.setSync(syncControl.isSync());
+		}
+		
+		return response;
 	}
 	
 	public void create(CreateDayTrainingRequest request) {	
@@ -62,12 +78,22 @@ public class DayTrainingService {
 		
 		request.setSequence(type.getSequence());
 		saveTraining(request);
+		syncControlService.desync(SyncControlEnum.TRAINNING.getValue());
 	}
 
+	public void delete(Long id) {
+		trainingMovementRepository.removeAll(id);
+		dayTrainingRepository.delete(id);
+		syncControlService.desync(SyncControlEnum.TRAINNING.getValue());
+	}
+	
 	public void sendNotification() {
-		FirebaseDataNotificationRequest dataNotification = new FirebaseDataNotificationRequest("Superafit", "Treino do dia disponível");
-		dataNotification.putData("training", new GetDayTrainingResponse(getDayTraining(new Date())));			
+		FirebaseDataNotificationRequest dataNotification = new FirebaseDataNotificationRequest("Superafit", "Treino do dia disponível");		
+		ListTrainning dayTraining = getDayTraining(new Date());
+		
+		dataNotification.putData("training", new GetDayTrainingResponse(dayTraining.getTrainnings(), dayTraining.isSync()));			
 		firebaseService.send(dataNotification);
+		syncControlService.sync(SyncControlEnum.TRAINNING.getValue());
 	}
 	
 	private void validateMovements(CreateDayTrainingRequest request) {

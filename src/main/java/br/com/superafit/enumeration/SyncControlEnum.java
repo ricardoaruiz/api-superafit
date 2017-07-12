@@ -2,7 +2,8 @@ package br.com.superafit.enumeration;
 
 public enum SyncControlEnum {
 
-	SCHEDULE(SyncEntityConstant.SCHEDULE);
+	SCHEDULE(SyncEntityConstant.SCHEDULE),
+	TRAINNING(SyncEntityConstant.TRAINNING);
 	
 	private final String value;
 	
@@ -16,6 +17,7 @@ public enum SyncControlEnum {
 	
 	public interface SyncEntityConstant {
 		public static final String SCHEDULE = "SCHEDULE";
+		public static final String TRAINNING = "TRAINNING";
 	}
 	
 }

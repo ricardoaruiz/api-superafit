@@ -14,11 +14,14 @@ public class GetDayTrainingResponse implements Serializable {
 
 	private List<DayTrainingDataResponse> data;
 	
+	private boolean sync;
+	
 	@JsonIgnore
 	private List<Training> trainings;
 			
-	public GetDayTrainingResponse(List<Training> trainings) {
+	public GetDayTrainingResponse(List<Training> trainings, boolean sync) {
 		this.trainings = trainings;
+		this.sync = sync;
 	}
 
 	public List<DayTrainingDataResponse> getData() {
@@ -33,6 +36,10 @@ public class GetDayTrainingResponse implements Serializable {
 		return data;
 	}
 	
+	public boolean isSync() {
+		return sync;
+	}
+
 	public boolean hasTraining() {
 		return trainings != null && !trainings.isEmpty();
 	}

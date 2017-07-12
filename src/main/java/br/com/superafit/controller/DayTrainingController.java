@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +19,7 @@ import br.com.superafit.controller.model.request.CreateDayTrainingRequest;
 import br.com.superafit.controller.model.response.GetDayTrainingResponse;
 import br.com.superafit.controller.model.response.ListScheduleResponse;
 import br.com.superafit.service.DayTrainingService;
+import br.com.superafit.service.domain.ListTrainning;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -41,10 +43,12 @@ public class DayTrainingController {
 			@DateTimeFormat(pattern="dd/MM/yyyy")
 			Date date) {
 		
-		GetDayTrainingResponse response = new GetDayTrainingResponse(trainingDayService.getDayTraining(date));		
+		ListTrainning dayTraining = trainingDayService.getDayTraining(date);
+		
+		GetDayTrainingResponse response = new GetDayTrainingResponse(dayTraining.getTrainnings(), dayTraining.isSync());		
 		return !response.hasTraining() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
 	}
-	
+		
 	@ApiOperation(value = "create", nickname = "create")		
 	@ApiResponses(value = { 
             @ApiResponse(code = 201, message = "Created"),
@@ -55,6 +59,12 @@ public class DayTrainingController {
 	public ResponseEntity<Void> create(@RequestBody @Valid CreateDayTrainingRequest request) {		
 		trainingDayService.create(request);	
 		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
+		trainingDayService.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 
 	@ApiOperation(value = "notification", nickname = "notification")
