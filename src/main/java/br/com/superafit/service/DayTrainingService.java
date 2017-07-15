@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.superafit.controller.model.request.CreateDayTrainingRequest;
 import br.com.superafit.controller.model.request.DayTrainingMovementsRequest;
+import br.com.superafit.controller.model.response.DayTrainingDataResponse;
 import br.com.superafit.controller.model.response.GetDayTrainingResponse;
 import br.com.superafit.enumeration.MessageCodeEnum;
 import br.com.superafit.enumeration.SyncControlEnum;
@@ -64,6 +65,16 @@ public class DayTrainingService {
 		}
 		
 		return response;
+	}
+	
+	public DayTrainingDataResponse getDayTraining(Long id) {
+		Training trainning = dayTrainingRepository.getOne(id);
+		
+		if (trainning != null) {
+			return new DayTrainingDataResponse(trainning); 
+		}
+		
+		return null;
 	}
 	
 	public void create(CreateDayTrainingRequest request) {	

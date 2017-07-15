@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.superafit.controller.model.request.CreateDayTrainingRequest;
+import br.com.superafit.controller.model.response.DayTrainingDataResponse;
 import br.com.superafit.controller.model.response.GetDayTrainingResponse;
 import br.com.superafit.controller.model.response.ListScheduleResponse;
 import br.com.superafit.service.DayTrainingService;
@@ -47,6 +48,12 @@ public class DayTrainingController {
 		
 		GetDayTrainingResponse response = new GetDayTrainingResponse(dayTraining.getTrainnings(), dayTraining.isSync());		
 		return !response.hasTraining() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
+	}
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.GET)
+	public ResponseEntity<DayTrainingDataResponse> getDayTrainning(@PathVariable("id") Long id) {
+		DayTrainingDataResponse result = trainingDayService.getDayTraining(id);
+		return result == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(result);
 	}
 		
 	@ApiOperation(value = "create", nickname = "create")		
