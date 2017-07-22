@@ -1,4 +1,4 @@
-package br.com.superafit.controller;
+package br.com.superafit.controller.app;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,8 +15,8 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@RequestMapping("device")
-public class DeviceController {
+@RequestMapping("app/device")
+public class DeviceAppController {
 
 	@Autowired
 	private DeviceService deviceService;

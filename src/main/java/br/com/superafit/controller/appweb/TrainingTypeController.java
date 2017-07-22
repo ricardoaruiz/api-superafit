@@ -1,4 +1,4 @@
-package br.com.superafit.controller;
+package br.com.superafit.controller.appweb;
 
 import java.util.ArrayList;
 import java.util.List;

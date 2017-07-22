@@ -1,4 +1,4 @@
-package br.com.superafit.controller;
+package br.com.superafit.controller.appweb;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
