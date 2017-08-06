@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class MovementResponse implements Serializable {
 
-	private static final long serialVersionUID = 7717090283272543828L;
+	private static final long serialVersionUID = 8452550487339608479L;
 
 	private String id;
 	
@@ -13,6 +13,8 @@ public class MovementResponse implements Serializable {
 	private String translate;
 	
 	private String description;
+	
+	private boolean active;
 	
 	public String getId() {
 		return id;
@@ -45,5 +47,13 @@ public class MovementResponse implements Serializable {
 	public void setTranslate(String translate) {
 		this.translate = translate;
 	}
-	
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+		
 }

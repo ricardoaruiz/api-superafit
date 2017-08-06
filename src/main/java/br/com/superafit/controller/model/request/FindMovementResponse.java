@@ -21,6 +21,7 @@ public class FindMovementResponse implements Serializable {
 			m.setName(mov.getName());
 			m.setTranslate(mov.getTranslate());
 			m.setDescription(mov.getDescription());
+			m.setActive(mov.isActive());
 			this.movements.add(m);
 		}
 	}	

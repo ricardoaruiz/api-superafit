@@ -30,6 +30,8 @@ public class Movement implements Serializable {
 	private String name;
 
 	private String translate;
+	
+	private int active;
 
 	@OneToMany(mappedBy="movement")
 	private List<TrainingMovement> trainingMovements;
@@ -89,6 +91,18 @@ public class Movement implements Serializable {
 		trainingMovement.setMovement(null);
 
 		return trainingMovement;
+	}
+
+	public boolean isActive() {
+		return getActive() == 1 ? true : false;
+	}
+	
+	public int getActive() {
+		return active;
+	}
+
+	public void setActive(int active) {
+		this.active = active;
 	}
 
 }

@@ -17,24 +17,44 @@ public class MovementService {
 	@Autowired
 	private MovementRepository movementRepository;
 	
-	public void create(CreateMovementRequest movement) {
+	public void save(CreateMovementRequest movement) {
+					
+		Movement movementFoundByName = movementRepository.findByName(movement.getName());
 		
-		if(movementRepository.findByName(movement.getName()) != null) {
+		if( (movementFoundByName != null && 
+			 movement.getId() != null && 
+			 !movementFoundByName.getId().toString().equals(movement.getId()))
+			||
+			(movementFoundByName != null && movement.getId() == null)
+				
+		) {
 			throw new MovementAlreadyExistsException(MessageCodeEnum.Constants.CREATE_MOVEMENT_ALREADY_EXISTS);
 		}
 		
 		movementRepository.save(getMovement(movement));		
 	}
 	
-	public List<Movement> find(String name) {		
-		return movementRepository.findByNameLike(name);
+	public Movement getMovement(Long id) {
+		return movementRepository.findOne(id);
+	}
+	
+	public List<Movement> findAllActive(String name) {		
+		return movementRepository.findActiveByNameLike(name);
+	}
+	
+	public List<Movement> findAll(String name) {
+		return movementRepository.findAllByNameLike(name);
 	}
 	
 	private Movement getMovement(CreateMovementRequest movement) {
 		Movement m = new Movement();
+		if(movement.getId() != null && !movement.getId().isEmpty()) {
+			m.setId(Long.valueOf(movement.getId()));
+		}
 		m.setName(movement.getName());
 		m.setTranslate(movement.getTranslate());
 		m.setDescription(movement.getDescription());
+		m.setActive(Integer.valueOf(movement.getActive()));
 		return m;
 	}
 	

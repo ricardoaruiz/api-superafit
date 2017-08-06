@@ -1,3 +1,5 @@
+/*Usuario*/
+insert into user values ('rruiz','123456',1);
 /*Training Type*/
 insert into training_type (name, sequence) values ('Aquecimento',1);
 insert into training_type (name, sequence) values ('Técnica',2);
