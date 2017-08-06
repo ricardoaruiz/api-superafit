@@ -1,5 +1,9 @@
 /*Usuario*/
 insert into user values ('rruiz','123456',1);
+/*Role*/
+insert into role (name) values ('ADMIN');
+/*User Role*/
+insert into user_role values ('rruiz',1);
 /*Training Type*/
 insert into training_type (name, sequence) values ('Aquecimento',1);
 insert into training_type (name, sequence) values ('Técnica',2);
