@@ -1,8 +1,10 @@
 package br.com.superafit.retrofit;
 
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import br.com.superafit.retrofit.service.FirebaseRetrofitService;
 import br.com.superafit.retrofit.service.KeepAliveFrontendService;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -10,28 +12,33 @@ import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 @Service
-public class FirebaseServiceFactory {
+public class KeepAliveServiceFactory {
 
-	private static final String FIREBASE_URL = "https://fcm.googleapis.com/fcm/";
+	@Value("${url.frontend}")
+	private String urlFrontend;
 	
 	private Retrofit retrofit;
 	
-	public FirebaseServiceFactory() {
+	public KeepAliveServiceFactory() {
 		
+	}
+	
+	@PostConstruct
+	private void config() {
 		HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
 		OkHttpClient client = new OkHttpClient.Builder()
 				.addInterceptor(interceptor)
 				.build();
 		
 		this.retrofit = new Retrofit.Builder()
-			.baseUrl(FIREBASE_URL)
+			.baseUrl(urlFrontend)
 			.client(client)
 			.addConverterFactory(JacksonConverterFactory.create())
 			.build();
 	}
 		
-	public FirebaseRetrofitService getFirebaseService() {
-		return this.retrofit.create(FirebaseRetrofitService.class);
+	public KeepAliveFrontendService getKeepAliveFrontendService() {
+		return this.retrofit.create(KeepAliveFrontendService.class);
 	}
 	
 }
