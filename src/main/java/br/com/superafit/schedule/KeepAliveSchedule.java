@@ -20,7 +20,7 @@ public class KeepAliveSchedule {
 	@Autowired
 	private KeepAliveServiceFactory serviceFactory;
 	
-	@Scheduled(fixedRate=4800)
+	@Scheduled(fixedRate=480000)
 	public void keepAlive() {
 		try {
 			LOG.info("Obtendo os dados de treino do frontend para verificação...");
