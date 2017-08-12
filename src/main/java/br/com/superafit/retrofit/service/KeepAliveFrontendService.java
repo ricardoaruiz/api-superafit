@@ -5,7 +5,7 @@ import retrofit2.http.GET;
 
 public interface KeepAliveFrontendService {
 
-	@GET("app/isOn")
+	@GET("app/trainning-available")
 	Call<Void> isOn();
 	
 }

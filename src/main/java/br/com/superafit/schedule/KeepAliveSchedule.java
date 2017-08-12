@@ -20,10 +20,10 @@ public class KeepAliveSchedule {
 	@Autowired
 	private KeepAliveServiceFactory serviceFactory;
 	
-	@Scheduled(fixedRate=480000)
+	@Scheduled(fixedRate=4800)
 	public void keepAlive() {
 		try {
-			LOG.info("Chamando Frontend isOn");
+			LOG.info("Obtendo os dados de treino do frontend para verificação...");
 			Call<Void> call = serviceFactory.getKeepAliveFrontendService().isOn();
 			Response<Void> response = call.execute();
 			LOG.info("Http code: " + response.code());
