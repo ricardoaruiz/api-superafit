@@ -24,7 +24,7 @@ public class VerificaDisponibilidadeScheduler {
 	@Autowired
 	private KeepAliveServiceFactory serviceFactory;
 	
-	@Scheduled(fixedRate=4800)
+	@Scheduled(fixedRate=480000)
 	public void verificaDisponibillidade() {
 		if (isEnableVerifyAvailableResouces()) {
 			try {
