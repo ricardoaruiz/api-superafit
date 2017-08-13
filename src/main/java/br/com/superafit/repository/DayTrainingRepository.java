@@ -19,6 +19,8 @@ public interface DayTrainingRepository extends JpaRepository<Training, Long> {
 	
 	Training findByDateAndTrainingType(Date date, TrainingType type);
 	
+	List<Training> findByDateLessThan(Date date);
+	
 	@Modifying
 	@Query(value="DELETE FROM training WHERE id = :id", nativeQuery=true)
 	@Transactional(propagation=Propagation.REQUIRED)

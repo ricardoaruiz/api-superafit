@@ -87,6 +87,9 @@ public class DayTrainingService {
 			throw new TrainningAlreadyExistsException(MessageCodeEnum.Constants.CREATE_DAY_TRAINING_ALREADY_EXISTS);		
 		}
 		
+		//Remove treinos de dias anteriores.
+		deleteOldTrainnings();
+		
 		request.setSequence(type.getSequence());
 		saveTraining(request);
 		syncControlService.desync(SyncControlEnum.TRAINNING.getValue());
@@ -105,6 +108,15 @@ public class DayTrainingService {
 		dataNotification.putData("training", new GetDayTrainingResponse(dayTraining.getTrainnings(), dayTraining.isSync()));			
 		firebaseService.send(dataNotification);
 		syncControlService.sync(SyncControlEnum.TRAINNING.getValue());
+	}
+	
+	private void deleteOldTrainnings() {
+		List<Training> oldTrainnings = dayTrainingRepository.findByDateLessThan(new Date());
+		if (oldTrainnings != null && !oldTrainnings.isEmpty()) {
+			for(Training training : oldTrainnings) {
+				delete(training.getId());
+			}
+		}
 	}
 	
 	private void validateMovements(CreateDayTrainingRequest request) {
