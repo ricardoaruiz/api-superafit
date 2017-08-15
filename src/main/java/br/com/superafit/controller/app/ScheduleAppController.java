@@ -28,7 +28,8 @@ public class ScheduleAppController {
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<ListScheduleResponse> list() {
 		ListScheduleResponse schedules = scheduleService.list();
-		return schedules == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(schedules);
+		return schedules == null || schedules.getSchedules() == null || schedules.getSchedules().isEmpty()
+				? ResponseEntity.noContent().build() : ResponseEntity.ok(schedules);
 	}
 	
 }

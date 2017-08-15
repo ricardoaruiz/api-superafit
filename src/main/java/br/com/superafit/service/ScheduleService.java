@@ -59,17 +59,15 @@ public class ScheduleService {
 	}
 
 	public ListScheduleResponse list() {
-		ListScheduleResponse response = null;
+		ListScheduleResponse response = new ListScheduleResponse();
 				
 		List<Schedule> schedules = scheduleRepository.findAllByOrderByWeekDayAscScheduleStartAsc();
 		if(schedules != null && !schedules.isEmpty()) {
 			response = new ListScheduleResponse();
-			response.setSchedules(getSchedules(schedules));
-			SyncControl syncControl = syncControlService.getSyncControl(SyncControlEnum.SCHEDULE.getValue());
-			if(syncControl != null) {
-				response.setSync(syncControl.isSync());
-			}
+			response.setSchedules(getSchedules(schedules));			
 		}
+		SyncControl syncControl = syncControlService.getSyncControl(SyncControlEnum.SCHEDULE.getValue());
+		response.setSync(syncControl == null ? true : syncControl.isSync());
 		
 		return response;
 	}
