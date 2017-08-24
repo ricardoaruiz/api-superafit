@@ -26,6 +26,8 @@ import retrofit2.Response;
 @Service
 public class FirebaseService {
 
+	private static final Object BLACKLISTED = "BLACKLISTED";
+
 	private final Logger LOG = LoggerFactory.getLogger(FirebaseService.class);
 	
 	@Value("${fcm.server.key}")
@@ -93,12 +95,16 @@ public class FirebaseService {
 	}
 
 	private void removeUnregisteredDevices(FirebaseRequest request, FirebaseResponse responseBody) {
-		if(responseBody.getFailure().intValue() == 1) {
+		if(responseBody != null && responseBody.getFailure().intValue() == 1) {
 			for(FirebaseValidationResultResponse erro : responseBody.getResults()) {
 				if(erro.getError().equals("NotRegistered")){
 					deviceService.remove(request.getTo());
 					break;
 				}
+			}
+		} else {
+			if (request.getTo().equals(BLACKLISTED)) {
+				deviceService.remove(request.getTo());
 			}
 		}
 	}
